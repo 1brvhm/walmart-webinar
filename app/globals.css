@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * Jacob's Walmart Selling Webinar — design system
+ * Light, commercial, trustworthy. Walmart-adjacent blue for structure,
+ * spark yellow reserved for primary actions and emphasis only.
+ * ------------------------------------------------------------------ */
+:root {
+  color-scheme: light;
+
+  --background: #ffffff;
+  --surface: #f6f8fb;
+  --surface-2: #eef3f9;
+  --border: rgba(10, 36, 64, 0.1);
+  --border-strong: rgba(10, 36, 64, 0.2);
+
+  --foreground: #0a2440;
+  --muted: #4a6b85;
+  --faint: #7d8fa3;
+
+  --brand: #0071ce;
+  --brand-dark: #004f91;
+  --brand-foreground: #ffffff;
+
+  --spark: #ffc220;
+  --spark-hover: #ffcf4d;
+  --spark-foreground: #0a2440;
+
+  --success: #10816a;
+  --danger: #c0392b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-spark: var(--spark);
+  --color-spark-hover: var(--spark-hover);
+  --color-spark-foreground: var(--spark-foreground);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ----------------------------- primitives ----------------------------- */
+
+.btn-spark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: var(--spark);
+  color: var(--spark-foreground);
+  padding: 0.9rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  box-shadow: 0 10px 24px -10px rgba(255, 194, 32, 0.9);
+  transition: background-color 150ms ease, transform 150ms ease,
+    box-shadow 150ms ease;
+}
+.btn-spark:hover:not(:disabled) {
+  background: var(--spark-hover);
+  transform: translateY(-1px);
+}
+.btn-spark:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong);
+  padding: 0.9rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+.btn-ghost:hover {
+  background: var(--surface);
+  border-color: var(--brand);
+}
+
+.card {
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+  box-shadow: 0 1px 2px rgba(10, 36, 64, 0.04);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong);
+  background: var(--background);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.field {
+  width: 100%;
+  border-radius: 0.625rem;
+  border: 1px solid var(--border-strong);
+  background: var(--background);
+  padding: 0.75rem 0.9rem;
+  font-size: 1rem;
+  color: var(--foreground);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.field::placeholder {
+  color: var(--faint);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 18%, transparent);
+}
+.field[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+/* Hero backdrop: soft blue wash with a faint grid. */
+.hero-bg {
+  background:
+    radial-gradient(
+      38rem 26rem at 85% -10%,
+      color-mix(in oklab, var(--spark) 22%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      44rem 30rem at 8% 0%,
+      color-mix(in oklab, var(--brand) 14%, transparent),
+      transparent
+    ),
+    linear-gradient(to bottom, var(--surface), var(--background));
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner {
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.modal-panel {
+  animation: modal-in 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-panel,
+  .spinner {
+    animation: none;
+  }
+  .btn-spark:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Legal pages — long-form prose without the typography plugin.
+ * ------------------------------------------------------------------ */
+.legal {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.legal h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  scroll-margin-top: 1.5rem;
+}
+.legal h3 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+.legal p {
+  margin-bottom: 1rem;
+}
+.legal ul,
+.legal ol {
+  margin-bottom: 1rem;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.legal ul {
+  list-style: disc;
+}
+.legal ol {
+  list-style: decimal;
+}
+.legal strong {
+  font-weight: 700;
+  color: var(--foreground);
+}
+.legal a {
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: underline;
+}
+.legal address {
+  font-style: normal;
+}
+
+/* A clause carriers will look for — called out so it can't be missed. */
+.legal-callout {
+  margin: 1.5rem 0;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-left: 4px solid var(--brand);
+  background: var(--surface);
+  padding: 1.25rem 1.5rem;
+}
+.legal-callout p:last-child {
+  margin-bottom: 0;
+}

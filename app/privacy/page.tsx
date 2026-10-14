@@ -105,14 +105,17 @@ export default function PrivacyPolicyPage() {
       <h2 id="sms-clause">5. SMS, mobile information, and consent</h2>
       <p>
         If you opt in to our SMS program, the following applies to your mobile
-        information. This clause governs in the event of any conflict with the
+        information. This section governs in the event of any conflict with the
         rest of this policy.
       </p>
+
+      <h3>5.1 Your mobile information is never shared or sold</h3>
       <div className="legal-callout">
         <p>
           <strong>
             No mobile information will be shared with third parties or
-            affiliates for marketing or promotional purposes.
+            affiliates for marketing or promotional purposes, and mobile phone
+            numbers will never be sold.
           </strong>{" "}
           All of the above categories of information exclude text messaging
           originator opt-in data and consent; this information will not be
@@ -130,14 +133,69 @@ export default function PrivacyPolicyPage() {
           instructions.
         </p>
       </div>
+
+      <h3>5.2 Purpose of our SMS communications</h3>
       <p>
+        Our text message program is called{" "}
+        <strong>{SMS_PROGRAM.name}</strong>. If you opt in, we use your mobile
+        number to send you {SMS_PROGRAM.description}. In practice that means:
+      </p>
+      <ul>
+        <li>
+          <strong>Confirmations</strong> — acknowledging that your seat is
+          reserved;
+        </li>
+        <li>
+          <strong>Alerts and updates</strong> — your Zoom join link, and notice
+          if a session is rescheduled or cancelled;
+        </li>
+        <li>
+          <strong>Reminders</strong> — time-sensitive prompts shortly before the
+          webinar begins; and
+        </li>
+        <li>
+          <strong>Occasional related training offers</strong> from{" "}
+          {BRAND.name}.
+        </li>
+      </ul>
+      <p>
+        We do not use your mobile number for any other purpose, and we never
+        send messages on behalf of other companies.
+      </p>
+
+      <h3>5.3 Message frequency</h3>
+      <p>
+        <strong>{SMS_PROGRAM.frequency}.</strong> Frequency depends on how many
+        webinars you register for and on whether a session you signed up for
+        changes.
+      </p>
+
+      <h3>5.4 Message and data rates</h3>
+      <p>
+        <strong>Message and data rates may apply.</strong> We do not charge you
+        for these messages, but your mobile carrier may charge you for sending
+        or receiving them under your plan. Contact your wireless provider for
+        details of your plan.
+      </p>
+
+      <h3>5.5 How to opt out</h3>
+      <p>
+        <strong>
+          Reply {SMS_PROGRAM.optOutKeyword} to unsubscribe.
+        </strong>{" "}
         You can withdraw your SMS consent at any time by replying{" "}
-        <strong>{SMS_PROGRAM.optOutKeyword}</strong> to any message we send, or
-        by emailing{" "}
-        <a href={`mailto:${BRAND.supportEmail}`}>{BRAND.supportEmail}</a>.
-        Opting out of SMS does not cancel your webinar registration or stop
-        your email confirmations. Full program details, including help
-        instructions and rate disclosures, are in the{" "}
+        <strong>{SMS_PROGRAM.optOutKeyword}</strong> to any message we send. We
+        will send a single reply confirming that you have been unsubscribed, and
+        then stop. You can also opt out by emailing{" "}
+        <a href={`mailto:${BRAND.supportEmail}`}>{BRAND.supportEmail}</a> or
+        calling {BRAND.supportPhone}. Opting out of SMS does not cancel your
+        webinar registration or stop your email confirmations.
+      </p>
+      <p>
+        For help at any time, reply{" "}
+        <strong>{SMS_PROGRAM.helpKeyword}</strong> to any message, or contact us
+        at <a href={`mailto:${BRAND.supportEmail}`}>{BRAND.supportEmail}</a>.
+        Full program terms are in the{" "}
         <Link href="/terms#sms">SMS Communications section of our Terms of Service</Link>.
       </p>
 

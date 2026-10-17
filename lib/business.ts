@@ -86,7 +86,7 @@ export const SMS_PROGRAM = {
  * If you edit this text, the change applies to opt-ins collected from that
  * point on; previously stored records keep the wording that was shown to them.
  */
-export const SMS_CONSENT_TEXT = `I agree to receive text messages from ${BRAND.name} at the phone number provided, including ${SMS_PROGRAM.description}. Consent is not a condition of purchase or of attending the webinar. Message and data rates may apply. Message frequency varies. Reply ${SMS_PROGRAM.optOutKeyword} to cancel or ${SMS_PROGRAM.helpKeyword} for help.`;
+export const SMS_CONSENT_TEXT = `I agree to receive webinar confirmations, Zoom join links, and time-sensitive reminders from ${BRAND.name} by text. Consent is not a condition of purchase or attending. Message frequency varies; most registrants receive 3–5 messages per webinar. Message and data rates may apply. Reply ${SMS_PROGRAM.optOutKeyword} to opt out or ${SMS_PROGRAM.helpKeyword} for help.`;
 
 /** Last substantive revision of the legal pages. Shown as "Last updated". */
 export const LEGAL_LAST_UPDATED = "October 13, 2026";
@@ -94,8 +94,11 @@ export const LEGAL_LAST_UPDATED = "October 13, 2026";
 /** Webinar schedule — surfaced on the landing page. */
 export const WEBINAR = {
   title: "E-Commerce with Jacob Jones — Walmart Selling Webinar",
-  date: "Thursday, October 22",
-  time: "2:00 PM ET / 11:00 AM PT",
-  duration: "75 minutes + live Q&A",
-  seats: "300 seats",
+  /** ISO start with explicit EST offset; drives the countdowns and .ics file. */
+  startsAt: "2026-10-30T20:30:00-05:00",
+  durationMinutes: 75,
+  /** Display strings. Keep in sync with `startsAt`. */
+  dateLong: "Friday, October 30, 2026",
+  dateShort: "October 30, 2026",
+  time: "8:30 PM EST",
 } as const;

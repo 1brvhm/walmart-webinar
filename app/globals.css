@@ -1,222 +1,349 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ *
- * Jacob's Walmart Selling Webinar — design system
- * Light, commercial, trustworthy. Walmart-adjacent blue for structure,
- * spark yellow reserved for primary actions and emphasis only.
+ * E-commerce with Jacob Jones — design system
+ * Light and calm: plum purple for structure, a warm Walmart-style spark
+ * on every primary action, pale lilac for tinted sections.
  * ------------------------------------------------------------------ */
 :root {
   color-scheme: light;
 
   --background: #ffffff;
-  --surface: #f6f8fb;
-  --surface-2: #eef3f9;
-  --border: rgba(10, 36, 64, 0.1);
-  --border-strong: rgba(10, 36, 64, 0.2);
+  --pale: #f7f2fa;
+  --pale-2: #f0e5f5;
+  --border: #e7e0eb;
+  --border-strong: #a89aad;
 
-  --foreground: #0a2440;
-  --muted: #4a6b85;
-  --faint: #7d8fa3;
+  --ink: #201728;
+  --muted: #645d6b;
 
-  --brand: #0071ce;
-  --brand-dark: #004f91;
-  --brand-foreground: #ffffff;
+  --purple: #60296f;
+  --purple-dark: #4a2056;
+  --plum: #2d1638;
+  --lilac: #e5d7eb;
 
-  --spark: #ffc220;
-  --spark-hover: #ffcf4d;
-  --spark-foreground: #0a2440;
-
-  --success: #10816a;
-  --danger: #c0392b;
+  --spark: #ffc637;
+  --success: #237153;
+  --danger: #b4233c;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
+  --color-pale: var(--pale);
+  --color-pale-2: var(--pale-2);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
   --color-muted: var(--muted);
-  --color-faint: var(--faint);
-  --color-brand: var(--brand);
-  --color-brand-dark: var(--brand-dark);
-  --color-brand-foreground: var(--brand-foreground);
+  --color-purple: var(--purple);
+  --color-purple-dark: var(--purple-dark);
+  --color-plum: var(--plum);
+  --color-lilac: var(--lilac);
   --color-spark: var(--spark);
-  --color-spark-hover: var(--spark-hover);
-  --color-spark-foreground: var(--spark-foreground);
   --color-success: var(--success);
   --color-danger: var(--danger);
 
-  --font-sans: var(--font-inter);
+  /* Legacy aliases still used by the legal pages. */
+  --color-foreground: var(--ink);
+  --color-brand: var(--purple);
+  --color-surface: var(--pale);
+  --color-faint: var(--muted);
+
+  --font-sans: var(--font-manrope);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 30px;
+  overflow-x: clip;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  color: var(--ink);
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+:focus-visible {
+  outline: 3px solid #ad68ca;
+  outline-offset: 5px;
+}
+
+/* Headings share one tight, heavy treatment; `em` inside them is the purple half. */
+.display {
+  font-weight: 800;
+  line-height: 1.17;
+  letter-spacing: -0.04em;
+}
+.display em {
+  font-style: normal;
+  color: var(--purple);
 }
 
 /* ----------------------------- primitives ----------------------------- */
 
-.btn-spark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  background: var(--spark);
-  color: var(--spark-foreground);
-  padding: 0.9rem 1.75rem;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  box-shadow: 0 10px 24px -10px rgba(255, 194, 32, 0.9);
-  transition: background-color 150ms ease, transform 150ms ease,
-    box-shadow 150ms ease;
-}
-.btn-spark:hover:not(:disabled) {
-  background: var(--spark-hover);
-  transform: translateY(-1px);
-}
-.btn-spark:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-  box-shadow: none;
+.eyebrow {
+  display: inline-block;
+  border-radius: 30px;
+  background: var(--pale-2);
+  padding: 6px 13px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--purple);
 }
 
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  border: 1px solid var(--border-strong);
-  padding: 0.9rem 1.75rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--foreground);
-  transition: background-color 150ms ease, border-color 150ms ease;
+/* Primary CTA. A soft glint sweeps across on hover and the spark turns. */
+.seat-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
-.btn-ghost:hover {
-  background: var(--surface);
-  border-color: var(--brand);
+.seat-cta::after {
+  content: "";
+  position: absolute;
+  inset: -60% auto -60% -70%;
+  width: 35%;
+  background: linear-gradient(90deg, transparent, #ffffff25, transparent);
+  transform: skewX(-22deg);
+  pointer-events: none;
+  z-index: -1;
 }
-
-.card {
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  background: var(--background);
-  box-shadow: 0 1px 2px rgba(10, 36, 64, 0.04);
+.seat-cta:hover::after {
+  animation: button-glint 0.8s ease-out;
 }
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  border: 1px solid var(--border-strong);
-  background: var(--background);
-  padding: 0.4rem 0.9rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
+.seat-cta .walmart-spark {
+  transition: transform 0.45s ease;
+}
+.seat-cta:hover .walmart-spark {
+  transform: rotate(60deg);
+}
+.seat-cta .cta-arrow {
+  transition: transform 0.25s ease;
+}
+.seat-cta:hover .cta-arrow {
+  transform: translateX(3px);
 }
 
-.field {
-  width: 100%;
-  border-radius: 0.625rem;
-  border: 1px solid var(--border-strong);
-  background: var(--background);
-  padding: 0.75rem 0.9rem;
-  font-size: 1rem;
-  color: var(--foreground);
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+/* Learn cards: an underline grows in on hover. */
+.learn-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, #60296f, #cba2df);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
 }
-.field::placeholder {
-  color: var(--faint);
-}
-.field:focus {
-  outline: none;
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 18%, transparent);
-}
-.field[aria-invalid="true"] {
-  border-color: var(--danger);
+.learn-card:hover::after,
+.learn-card:focus-within::after {
+  transform: scaleX(1);
 }
 
-/* Hero backdrop: soft blue wash with a faint grid. */
-.hero-bg {
-  background:
-    radial-gradient(
-      38rem 26rem at 85% -10%,
-      color-mix(in oklab, var(--spark) 22%, transparent),
-      transparent
-    ),
-    radial-gradient(
-      44rem 30rem at 8% 0%,
-      color-mix(in oklab, var(--brand) 14%, transparent),
-      transparent
-    ),
-    linear-gradient(to bottom, var(--surface), var(--background));
+/* Surprise gifts — drawn in CSS so there is nothing to load. */
+.gift {
+  position: relative;
+  width: 70px;
+  height: 65px;
+  margin: 20px auto 27px;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #8f4fa3, #60296f);
+  box-shadow: 8px 9px 0 #e2cfe9;
+  animation: gift-hover 5s ease-in-out infinite;
 }
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+.gift::before {
+  content: "";
+  position: absolute;
+  inset: 0 28px;
+  background: #dfbcea;
+}
+.gift::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  top: 0;
+  height: 15px;
+  border-radius: 5px;
+  background: #a975bd;
+}
+.reveal::after {
+  content: "✦";
+  position: absolute;
+  right: 17%;
+  top: 20%;
+  font-size: 15px;
+  color: #ad7bbe;
+  animation: twinkle 4s ease-in-out infinite;
+}
+@media (max-width: 560px) {
+  .gift {
+    width: 45px;
+    height: 44px;
+    margin: 15px auto 23px;
+    box-shadow: 5px 6px 0 #e2cfe9;
   }
+  .gift::before {
+    inset: 0 18px;
+  }
+  .gift::after {
+    height: 11px;
+    left: -3px;
+    right: -3px;
+  }
+  .reveal::after {
+    right: 12%;
+    font-size: 12px;
+  }
+}
+
+/* FAQ: native <details> with a +/− marker. */
+.faq-card summary {
+  list-style: none;
+}
+.faq-card summary::-webkit-details-marker {
+  display: none;
+}
+.faq-card summary::after {
+  content: "+";
+  font-size: 25px;
+  line-height: 1;
+  color: var(--purple);
+}
+.faq-card[open] summary::after {
+  content: "−";
+}
+
+/* Hero dashboard sparkline + banner line. */
+.growth-tracer {
+  stroke-dasharray: 0.11 0.89;
+  animation: trace 5s linear infinite;
+  filter: drop-shadow(0 0 3px #bd85d3);
+}
+.banner-line {
+  stroke-dasharray: 1;
+  animation: line-grow 4.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 5px #ffce6c60);
+}
+.float-sales {
+  animation: float-sales 5s ease-in-out infinite;
+}
+
+.join-panel {
+  background:
+    radial-gradient(ellipse at 80% 0, #763a87, transparent 65%),
+    #281334;
+}
+
+/* "Pause animations" toggles this on <body>. */
+body.motion-paused *,
+body.motion-paused *::before,
+body.motion-paused *::after {
+  animation-play-state: paused !important;
+}
+
+@keyframes button-glint {
+  from { left: -70%; }
+  to { left: 140%; }
+}
+@keyframes gift-hover {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; scale: 0.85; }
+  50% { opacity: 1; scale: 1.15; }
+}
+@keyframes trace {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes float-sales {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+@keyframes line-grow {
+  0% { stroke-dashoffset: 1; opacity: 0.25; }
+  15% { opacity: 1; }
+  80%, 100% { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 .spinner {
   animation: spin 0.7s linear infinite;
 }
-
 @keyframes modal-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .modal-panel {
   animation: modal-in 180ms ease-out;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .modal-panel,
-  .spinner {
+@media (hover: none) {
+  .seat-cta:hover .walmart-spark,
+  .seat-cta:hover .cta-arrow {
+    transform: none;
+  }
+  .seat-cta:hover::after {
     animation: none;
   }
-  .btn-spark:hover:not(:disabled) {
-    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .growth-tracer {
+    display: none;
+  }
+  .banner-line {
+    stroke-dashoffset: 0;
   }
 }
 
 /* ------------------------------------------------------------------ *
  * Legal pages — long-form prose without the typography plugin.
  * ------------------------------------------------------------------ */
+.card {
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+}
+
 .legal {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   line-height: 1.75;
   color: var(--muted);
 }
 .legal h2 {
   margin-top: 2.75rem;
   margin-bottom: 0.75rem;
-  font-size: 1.25rem;
+  font-size: 1.375rem;
   font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--foreground);
+  letter-spacing: -0.03em;
+  color: var(--ink);
   scroll-margin-top: 1.5rem;
 }
 .legal h3 {
   margin-top: 1.75rem;
   margin-bottom: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-weight: 700;
-  color: var(--foreground);
+  color: var(--ink);
 }
 .legal p {
   margin-bottom: 1rem;
@@ -237,11 +364,11 @@ body {
 }
 .legal strong {
   font-weight: 700;
-  color: var(--foreground);
+  color: var(--ink);
 }
 .legal a {
   font-weight: 600;
-  color: var(--brand);
+  color: var(--purple);
   text-decoration: underline;
 }
 .legal address {
@@ -252,9 +379,9 @@ body {
 .legal-callout {
   margin: 1.5rem 0;
   border-radius: 0.75rem;
-  border: 1px solid var(--border-strong);
-  border-left: 4px solid var(--brand);
-  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--purple);
+  background: var(--pale);
   padding: 1.25rem 1.5rem;
 }
 .legal-callout p:last-child {

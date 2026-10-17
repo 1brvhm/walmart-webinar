@@ -1,14 +1,25 @@
-export default function Logo() {
+import Image from "next/image";
+
+/** Channel mark + wordmark, used in the header and footer. */
+export default function Logo({ href = "/" }: { href?: string }) {
   return (
-    <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-brand text-brand-foreground">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path
-          d="M12 3v18M3 12h18M6.5 6.5l11 11M17.5 6.5l-11 11"
-          stroke="currentColor"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-        />
-      </svg>
-    </span>
+    <a
+      href={href}
+      className="flex shrink-0 items-center gap-2 leading-tight text-ink no-underline sm:gap-[11px]"
+    >
+      <Image
+        src="/logo.png"
+        alt=""
+        width={47}
+        height={47}
+        className="size-[38px] rounded-[9px] sm:size-[47px] sm:rounded-xl"
+      />
+      <span>
+        <strong className="block text-base tracking-[-0.03em] sm:text-[19px]">
+          E-commerce
+        </strong>
+        <small className="block text-[11px] sm:text-sm">with Jacob Jones</small>
+      </span>
+    </a>
   );
 }

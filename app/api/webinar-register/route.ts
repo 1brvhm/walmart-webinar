@@ -26,8 +26,6 @@ type RegisterBody = {
   email?: unknown;
   phone?: unknown;
   smsConsent?: unknown;
-  smsConsentText?: unknown;
-  source?: unknown;
 };
 
 /** Trim and cap a free-text field so an oversized payload can't be forwarded. */
@@ -56,7 +54,6 @@ export async function POST(request: Request) {
   const fullName = asString(body.fullName, 120);
   const email = asString(body.email, 200);
   const phone = asString(body.phone, 40);
-  const source = asString(body.source, 60) || "unknown";
   // Only an explicit boolean true counts as consent — never a truthy string.
   const smsConsent = body.smsConsent === true;
 
@@ -95,7 +92,6 @@ export async function POST(request: Request) {
         smsConsentTimestamp: new Date().toISOString(),
         smsConsentMethod: "web form checkbox, unchecked by default",
         smsConsentUrl: `${BRAND.siteUrl}/`,
-        smsConsentSource: source,
         smsConsentIp: clientIp(request),
         smsConsentUserAgent: asString(
           request.headers.get("user-agent") ?? "",
@@ -125,7 +121,6 @@ export async function POST(request: Request) {
     fullName,
     email,
     phone,
-    source,
     webinar: WEBINAR.title,
     brand: BRAND.name,
     submittedAt: new Date().toISOString(),
@@ -163,5 +158,6 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ success: true, smsConsent }, { status: 201 });
+  // The form treats exactly 200 as "registered".
+  return NextResponse.json({ success: true, smsConsent }, { status: 200 });
 }

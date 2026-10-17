@@ -4,6 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -11,9 +12,8 @@ import {
 import RegisterModal from "./RegisterModal";
 
 type RegistrationContextValue = {
-  /** Opens the registration modal. `source` is forwarded to Zapier so you can
-   *  see which CTA on the page converted. */
-  open: (source?: string) => void;
+  /** Opens the registration modal. */
+  open: () => void;
 };
 
 const RegistrationContext = createContext<RegistrationContextValue | null>(null);
@@ -38,14 +38,22 @@ export default function RegistrationProvider({
   children: ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [source, setSource] = useState("hero");
 
-  const open = useCallback((from = "hero") => {
-    setSource(from);
-    setIsOpen(true);
-  }, []);
-
+  const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
+
+  // Deep links (ads, emails, the footer) can point straight at the form with
+  // /#register. The hash is cleared so the same link works a second time.
+  useEffect(() => {
+    function openFromHash() {
+      if (window.location.hash !== "#register") return;
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+      setIsOpen(true);
+    }
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+    return () => window.removeEventListener("hashchange", openFromHash);
+  }, []);
 
   const value = useMemo<RegistrationContextValue>(() => ({ open }), [open]);
 
@@ -53,7 +61,7 @@ export default function RegistrationProvider({
     <RegistrationContext.Provider value={value}>
       {children}
       {/* Mounted only while open, so each visit starts from a blank form. */}
-      {isOpen && <RegisterModal onClose={close} source={source} />}
+      {isOpen && <RegisterModal onClose={close} />}
     </RegistrationContext.Provider>
   );
 }

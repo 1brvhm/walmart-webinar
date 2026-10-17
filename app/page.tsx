@@ -1,621 +1,366 @@
-import RegistrationProvider from "@/components/RegistrationProvider";
-import RegisterButton from "@/components/RegisterButton";
-import SiteFooter from "@/components/SiteFooter";
+import Image from "next/image";
+import { CountdownBar, CountdownTiles, LocalTimeAndCalendar } from "@/components/Countdown";
+import HeroScene, { MotionToolbar } from "@/components/HeroScene";
 import Logo from "@/components/Logo";
-import { BRAND, SUPPORTED_BY, WEBINAR } from "@/lib/business";
+import RegistrationProvider from "@/components/RegistrationProvider";
+import SalesChart from "@/components/SalesChart";
+import SeatButton from "@/components/SeatButton";
+import SiteFooter from "@/components/SiteFooter";
+import { WEBINAR } from "@/lib/business";
+
+const WRAP = "mx-auto w-[min(1180px,calc(100%-36px))] sm:w-[min(1180px,calc(100%-40px))] md:w-[min(1180px,calc(100%-64px))]";
+const SECTION = "py-12 sm:py-[60px] md:py-[88px]";
+
+const LEARN = [
+  {
+    label: "Getting started",
+    title: "Understand the seller application",
+    body: "Learn what to prepare before applying and understand the first steps toward a Walmart Marketplace business.",
+  },
+  {
+    label: "Product research",
+    title: "Know what to look for in a product",
+    body: "Explore how to research products, compare suppliers, and think through costs before making a buying decision.",
+  },
+  {
+    label: "Your store",
+    title: "Plan your listings, pricing & shipping",
+    body: "Get a practical introduction to the moving parts of a store and the decisions you’ll need to make.",
+  },
+  {
+    label: "Your next steps",
+    title: "Leave with a clearer direction",
+    body: "Understand what to focus on next, then bring your questions to the live Q&A with Jacob.",
+  },
+];
+
+const STEPS = [
+  {
+    title: "Explore a sales trend",
+    body: "Switch between time periods to see how a sample store’s sales change over time.",
+  },
+  {
+    title: "Look beyond revenue",
+    body: "Compare sales with order volume. Revenue alone does not tell you how much a business earns.",
+  },
+  {
+    title: "Learn what to watch",
+    body: "Join Jacob to understand product costs, pricing, and the decisions behind running a store.",
+  },
+];
+
+const FAQS = [
+  {
+    q: "Is the webinar really free?",
+    a: "Yes. The live webinar is free to attend. No credit card is required.",
+  },
+  {
+    q: "Do I need any experience?",
+    a: "No. Jacob starts with the foundations. You do not need an existing Walmart seller account to attend.",
+  },
+  {
+    q: "When is it, and how long is the session?",
+    a: `${WEBINAR.dateLong} at ${WEBINAR.time} (UTC−5). Plan for ${WEBINAR.durationMinutes} minutes of training followed by live questions and answers. Your local start time is shown beneath the countdown above.`,
+  },
+  {
+    q: "How do I join the webinar?",
+    a: "Select “Save my free seat” and enter your details. Your access information and reminders will be sent by email.",
+  },
+  {
+    q: "Can I join from my phone?",
+    a: "Yes. You can register from your phone and use the webinar access link in your confirmation email to join the live session.",
+  },
+];
+
+function Eyebrow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <span className={`eyebrow mb-[18px] text-[11px] sm:mb-5 sm:text-xs ${className}`}>{children}</span>;
+}
 
 export default function Home() {
   return (
     <RegistrationProvider>
-      <div className="flex flex-1 flex-col">
-        <SiteHeader />
-        <Hero />
-        <ValueStrip />
-        <Curriculum />
-        <Agenda />
-        <AboutJacob />
-        <Faq />
-        <ClosingCta />
-        <SiteFooter />
-      </div>
-    </RegistrationProvider>
-  );
-}
+      <a
+        href="#main"
+        className="absolute left-4 top-[-100px] z-20 bg-white p-[15px] focus:top-3"
+      >
+        Skip to content
+      </a>
 
-/* ------------------------------- header ------------------------------- */
+      <CountdownBar />
 
-function SiteHeader() {
-  return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
-      <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-        <span className="flex items-center gap-2.5 font-bold tracking-tight">
-          <Logo />
-          {BRAND.shortName}
-        </span>
-        <div className="flex items-center gap-3">
-          <a
-            href="#curriculum"
-            className="hidden text-sm font-semibold text-muted transition-colors hover:text-foreground sm:inline"
-          >
-            What you&apos;ll learn
-          </a>
-          <a
-            href="#faq"
-            className="hidden text-sm font-semibold text-muted transition-colors hover:text-foreground sm:inline"
-          >
-            FAQ
-          </a>
-          <RegisterButton
-            source="nav"
-            className="btn-spark px-5 py-2.5 text-sm"
-          >
-            Book Your Free Spot
-          </RegisterButton>
-        </div>
-      </nav>
-    </header>
-  );
-}
-
-/* -------------------------------- hero -------------------------------- */
-
-function Hero() {
-  return (
-    <section className="hero-bg relative overflow-hidden border-b border-border">
-      <div className="mx-auto grid w-full max-w-6xl gap-14 px-6 pb-20 pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:pb-28 lg:pt-24">
-        <div className="flex flex-col items-start gap-6">
-          <span className="chip">
-            <span className="size-1.5 rounded-full bg-danger" />
-            Free live webinar &middot; {WEBINAR.date}
-          </span>
-
-          <h1 className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-            Build a profitable{" "}
-            <span className="text-brand">Walmart Marketplace</span> business
-            from scratch.
-          </h1>
-
-          <p className="max-w-xl text-lg leading-8 text-muted">
-            Walmart&apos;s marketplace has a fraction of Amazon&apos;s sellers
-            and a fraction of the competition. In this free live training,
-            {BRAND.hostName} walks through the exact system he uses to get approved, source
-            products that actually sell, and scale without burning cash on
-            inventory.
-          </p>
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <RegisterButton source="hero">
-              Book Your Free Spot
-              <ArrowRight />
-            </RegisterButton>
-            <a href="#curriculum" className="btn-ghost">
-              See what&apos;s covered
-            </a>
-          </div>
-
-          <dl className="mt-2 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+      <header className="border-b border-border">
+        <nav className={`${WRAP} flex items-center justify-between gap-3 py-[18px] md:gap-6 md:py-6`} aria-label="Main navigation">
+          <Logo href="#main" />
+          <div className="hidden gap-4 md:flex lg:gap-[25px]">
             {[
-              { label: "When", value: `${WEBINAR.date}, ${WEBINAR.time}` },
-              { label: "Length", value: WEBINAR.duration },
-              { label: "Cost", value: "Free to attend" },
-            ].map((item) => (
-              <div key={item.label} className="flex flex-col">
-                <dt className="font-semibold text-faint">{item.label}</dt>
-                <dd className="font-semibold">{item.value}</dd>
-              </div>
+              ["#learn", "The webinar"],
+              ["#host", "Meet Jacob"],
+              ["#explore", "Explore"],
+              ["#faq", "FAQs"],
+            ].map(([href, label]) => (
+              <a key={href} href={href} className="py-2.5 text-sm font-bold text-purple no-underline lg:text-[15px]">
+                {label}
+              </a>
             ))}
-          </dl>
-
-          <p className="text-sm text-faint">
-            Supported by{" "}
-            <a
-              href={SUPPORTED_BY.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-brand underline"
-            >
-              {SUPPORTED_BY.label}
-            </a>
-          </p>
-        </div>
-
-        <HeroCard />
-      </div>
-    </section>
-  );
-}
-
-function HeroCard() {
-  return (
-    <div className="card mx-auto w-full max-w-md overflow-hidden p-0 shadow-xl">
-      <div className="flex items-center justify-between bg-brand px-6 py-4 text-brand-foreground">
-        <span className="text-sm font-bold uppercase tracking-wide">
-          Live training
-        </span>
-        <span className="rounded-full bg-spark px-3 py-1 text-xs font-bold text-spark-foreground">
-          {WEBINAR.seats}
-        </span>
-      </div>
-
-      <div className="flex flex-col gap-5 px-6 py-7">
-        <div className="flex flex-col gap-1">
-          <span className="text-sm font-semibold text-faint">
-            Save your seat for
-          </span>
-          <span className="text-2xl font-extrabold tracking-tight">
-            {WEBINAR.date}
-          </span>
-          <span className="font-semibold text-brand">{WEBINAR.time}</span>
-        </div>
-
-        <ul className="flex flex-col gap-3 border-t border-border pt-5">
-          {[
-            "Live walkthrough of a real seller account",
-            "Product research template to keep",
-            "Live Q&A — bring your questions",
-            "Replay sent to everyone who registers",
-          ].map((item) => (
-            <li key={item} className="flex items-start gap-3 text-sm">
-              <CheckBadge />
-              <span className="leading-6">{item}</span>
-            </li>
-          ))}
-        </ul>
-
-        <RegisterButton source="hero-card" className="btn-spark w-full">
-          Book Your Free Spot
-        </RegisterButton>
-
-        <p className="text-center text-xs text-faint">
-          No card required &middot; Takes 20 seconds
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/* ----------------------------- value strip ----------------------------- */
-
-function ValueStrip() {
-  const stats = [
-    { value: "120k+", label: "sellers on Walmart Marketplace" },
-    { value: "2M+", label: "weekly in-store shoppers per state" },
-    { value: "0", label: "monthly seller fees to start" },
-  ];
-
-  return (
-    <section className="border-b border-border bg-surface">
-      <div className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-12 sm:grid-cols-3">
-        {stats.map((stat) => (
-          <div key={stat.label} className="flex flex-col gap-1 text-center">
-            <span className="text-3xl font-extrabold tracking-tight text-brand">
-              {stat.value}
-            </span>
-            <span className="text-sm leading-6 text-muted">{stat.label}</span>
           </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+          <SeatButton size="nav" />
+        </nav>
+      </header>
 
-/* ----------------------------- curriculum ----------------------------- */
+      <main id="main">
+        {/* ---------------- Hero ---------------- */}
+        <section className={`${WRAP} grid min-w-0 grid-cols-1 items-center gap-[25px] pb-[25px] pt-8 min-[900px]:grid-cols-[1fr_1.08fr] min-[900px]:gap-6 min-[900px]:pb-[38px] min-[900px]:pt-14 min-[1100px]:gap-[42px]`}>
+          <div className="min-w-0 max-w-[680px]">
+            <Eyebrow>Free live Walmart webinar</Eyebrow>
+            <h1 className="display mb-6 text-[clamp(36px,9.5vw,46px)] min-[600px]:text-[clamp(40px,4.2vw,58px)]">
+              Your next chapter
+              <br />
+              in e-commerce
+              <br />
+              <em>starts with Walmart.</em>
+            </h1>
+            <p className="text-lg leading-[1.75] text-muted sm:text-[19px]">
+              Learn the foundations of selling on Walmart Marketplace with Jacob Jones, a
+              seven-figure e-commerce seller and the founder of SourceDart.
+            </p>
+            <p className="mb-[18px] mt-[25px] text-base font-extrabold sm:text-[17px]">
+              {WEBINAR.dateLong} · {WEBINAR.time}
+            </p>
+            <SeatButton className="w-full min-[600px]:max-w-[440px]" />
+            <p className="mt-[13px] text-sm text-muted">Free to attend. No credit card needed.</p>
+          </div>
+          <div className="min-w-0">
+            <HeroScene />
+          </div>
+        </section>
 
-const MODULES = [
-  {
-    title: "Getting approved fast",
-    body: "What Walmart's seller application actually screens for, the documents to have ready, and the common rejection triggers to avoid before you apply.",
-    icon: <ClipboardIcon />,
-  },
-  {
-    title: "Finding products that sell",
-    body: "A repeatable research process for spotting low-competition listings with real demand — and the categories Jacob Jones avoids entirely.",
-    icon: <SearchIcon />,
-  },
-  {
-    title: "Sourcing without big capital",
-    body: "How to negotiate with suppliers, test demand on small orders, and keep cash free instead of locked in dead inventory.",
-    icon: <BoxIcon />,
-  },
-  {
-    title: "Listings that win the buy box",
-    body: "Titles, images, attributes, and pricing signals that move you up Walmart's search results and keep you holding the buy box.",
-    icon: <TrophyIcon />,
-  },
-  {
-    title: "Fulfilment that scales",
-    body: "When to use Walmart Fulfilment Services versus shipping yourself, and how to keep your seller scorecard healthy as volume grows.",
-    icon: <TruckIcon />,
-  },
-  {
-    title: "Scaling past your first wins",
-    body: "Reinvestment, catalogue expansion, and the operating rhythm that turns a handful of sales into a predictable monthly run rate.",
-    icon: <ChartIcon />,
-  },
-];
+        <MotionToolbar />
 
-function Curriculum() {
-  return (
-    <section id="curriculum" className="border-b border-border">
-      <div className="mx-auto w-full max-w-6xl px-6 py-20">
-        <div className="flex flex-col gap-3">
-          <span className="text-sm font-bold uppercase tracking-wide text-brand">
-            What you&apos;ll learn
-          </span>
-          <h2 className="max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Six things most new Walmart sellers get wrong.
-          </h2>
-          <p className="max-w-2xl text-lg leading-8 text-muted">
-            No fluff and no theory — every section is something you can act on
-            the same week.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {MODULES.map((module) => (
-            <div key={module.title} className="card flex flex-col gap-4 p-6">
-              <span className="flex size-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                {module.icon}
-              </span>
-              <h3 className="text-lg font-bold tracking-tight">
-                {module.title}
-              </h3>
-              <p className="text-sm leading-6 text-muted">{module.body}</p>
+        <div className="border-y border-border py-[25px]">
+          <div className={`${WRAP} flex flex-col items-center justify-between gap-5 md:flex-row md:gap-6`}>
+            <div className="flex items-center gap-4 text-[13px] text-muted sm:text-sm">
+              <span>Sponsored by</span>
+              <Image src="/sourcedart.svg" alt="SourceDart" width={152} height={22} className="w-[152px] brightness-[0.2]" />
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* -------------------------------- agenda -------------------------------- */
-
-const AGENDA = [
-  {
-    time: "0:00",
-    title: "The Walmart opportunity right now",
-    body: "Why the competition gap exists, and who it suits.",
-  },
-  {
-    time: "0:15",
-    title: "Account setup, live",
-    body: "A real application walked through end to end.",
-  },
-  {
-    time: "0:35",
-    title: "Product research workshop",
-    body: "Finding three viable products together, on the call.",
-  },
-  {
-    time: "0:55",
-    title: "Pricing and the buy box",
-    body: "How to stay profitable without racing to the bottom.",
-  },
-  {
-    time: "1:15",
-    title: "Open Q&A",
-    body: "Ask anything — we stay until the questions run out.",
-  },
-];
-
-function Agenda() {
-  return (
-    <section className="border-b border-border bg-surface">
-      <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-20 lg:grid-cols-[0.8fr_1.2fr]">
-        <div className="flex flex-col gap-3">
-          <span className="text-sm font-bold uppercase tracking-wide text-brand">
-            Agenda
-          </span>
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            How the {WEBINAR.duration.split(" ")[0]} minutes break down.
-          </h2>
-          <p className="leading-7 text-muted">
-            Come with a notepad. Everything is demonstrated live, and the replay
-            goes out to every registrant afterwards.
-          </p>
-        </div>
-
-        <ol className="flex flex-col">
-          {AGENDA.map((item, index) => (
-            <li
-              key={item.title}
-              className="flex gap-5 border-t border-border py-5 first:border-t-0 first:pt-0"
-            >
-              <span className="w-12 shrink-0 pt-0.5 font-mono text-sm font-bold text-brand">
-                {item.time}
-              </span>
-              <div className="flex flex-col gap-1">
-                <h3 className="font-bold tracking-tight">
-                  {index + 1}. {item.title}
-                </h3>
-                <p className="text-sm leading-6 text-muted">{item.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------ about Jacob ------------------------------ */
-
-function AboutJacob() {
-  return (
-    <section className="border-b border-border">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 py-20 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="card flex flex-col items-start gap-5 bg-surface p-8">
-          <div className="flex size-20 items-center justify-center rounded-full bg-brand text-3xl font-extrabold text-brand-foreground">
-            J
-          </div>
-          <div className="flex flex-col gap-1">
-            <span className="text-xl font-extrabold tracking-tight">
-              {BRAND.hostName}
-            </span>
-            <span className="text-sm font-semibold text-brand">
-              E-commerce seller &amp; coach
-            </span>
-          </div>
-          <p className="text-sm leading-6 text-muted">
-            {BRAND.hostName} has been selling on Walmart Marketplace since its seller
-            programme opened up, and now helps new sellers get their first
-            listings live without the expensive mistakes.
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-5">
-          <span className="text-sm font-bold uppercase tracking-wide text-brand">
-            Your host
-          </span>
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            A working seller, not a course salesman.
-          </h2>
-          <p className="text-lg leading-8 text-muted">
-            This webinar is the training {BRAND.hostName} wished existed when he started:
-            the real sequence of steps, the numbers behind each decision, and
-            the parts nobody warns you about — account health, returns, and
-            keeping margin intact as you grow.
-          </p>
-          <p className="leading-7 text-muted">
-            You&apos;ll leave knowing exactly what to do in week one, week two,
-            and week three — and whether Walmart is the right fit for you at all.
-          </p>
-          <div>
-            <RegisterButton source="about">
-              Book Your Free Spot
-              <ArrowRight />
-            </RegisterButton>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* --------------------------------- FAQ --------------------------------- */
-
-const FAQS = [
-  {
-    q: "Is it really free?",
-    a: "Yes — the live training and the replay are both free. There's no card required to register and nothing to buy on the call.",
-  },
-  {
-    q: "What if I can't make the live session?",
-    a: "Register anyway. Everyone who signs up gets the replay by email, so you can watch whenever suits you.",
-  },
-  {
-    q: "Do I need an existing business or inventory?",
-    a: "No. The session starts from zero — no seller account, no suppliers, no products. Existing sellers will get the most from the pricing and scaling sections.",
-  },
-  {
-    q: "Does this work outside the United States?",
-    a: "Walmart Marketplace has specific requirements for international sellers. {BRAND.hostName} covers what they are and the realistic routes in, so you'll know where you stand.",
-  },
-  {
-    q: "How much time does selling on Walmart take?",
-    a: "Most people start with a few focused hours a week. {BRAND.hostName} breaks down where that time is best spent early on versus what can wait.",
-  },
-];
-
-function Faq() {
-  return (
-    <section id="faq" className="border-b border-border bg-surface">
-      <div className="mx-auto w-full max-w-3xl px-6 py-20">
-        <div className="flex flex-col gap-3 text-center">
-          <span className="text-sm font-bold uppercase tracking-wide text-brand">
-            FAQ
-          </span>
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Questions, answered.
-          </h2>
-        </div>
-
-        <div className="mt-10 flex flex-col gap-3">
-          {FAQS.map((faq) => (
-            <details key={faq.q} className="card group p-0">
-              <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 font-bold tracking-tight marker:content-none">
-                {faq.q}
-                <span className="shrink-0 text-brand transition-transform group-open:rotate-45">
-                  <PlusIcon />
+            <div className="flex flex-wrap justify-center gap-2.5 text-[13px] font-bold sm:gap-[15px] sm:text-sm lg:gap-[30px] lg:text-base">
+              {["Beginner friendly", "Practical training", "Live Q&A"].map((fact) => (
+                <span key={fact}>
+                  <span className="mr-[9px] text-purple" aria-hidden="true">✓</span>
+                  {fact}
                 </span>
-              </summary>
-              <p className="px-6 pb-5 text-sm leading-6 text-muted">{faq.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ----------------------------- closing CTA ----------------------------- */
-
-function ClosingCta() {
-  return (
-    <section>
-      <div className="mx-auto w-full max-w-6xl px-6 py-20">
-        <div className="card hero-bg relative overflow-hidden px-8 py-16 text-center">
-          <span className="chip mx-auto">
-            <span className="size-1.5 rounded-full bg-danger" />
-            {WEBINAR.seats} &middot; {WEBINAR.date}
-          </span>
-          <h2 className="mt-5 text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Your seat is free. Your competition is still on Amazon.
-          </h2>
-          <p className="mx-auto mt-4 max-w-lg text-lg leading-8 text-muted">
-            Join {BRAND.hostName} live on {WEBINAR.date} at {WEBINAR.time} and leave with a
-            plan you can start the same day.
-          </p>
-          <div className="mt-8 flex justify-center">
-            <RegisterButton source="closing">
-              Book Your Free Spot
-              <ArrowRight />
-            </RegisterButton>
+              ))}
+            </div>
           </div>
-          <p className="mt-6 text-sm text-faint">
-            This webinar is supported by{" "}
-            <a
-              href={SUPPORTED_BY.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-brand underline"
-            >
-              {SUPPORTED_BY.label}
-            </a>
-          </p>
         </div>
-      </div>
-    </section>
-  );
-}
 
+        {/* ---------------- What you'll learn ---------------- */}
+        <section id="learn" className={`${SECTION} bg-pale`}>
+          <div className={WRAP}>
+            <div className="mb-7 max-w-[700px] sm:mb-[38px]">
+              <Eyebrow>Inside the free webinar</Eyebrow>
+              <h2 className="display text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">
+                A clearer path to
+                <br />
+                <em>selling on Walmart.</em>
+              </h2>
+              <p className="mt-[18px] text-muted">
+                No need to piece it together on your own. Jacob will walk you through the
+                foundations, one step at a time.
+              </p>
+            </div>
 
-/* -------------------------------- icons -------------------------------- */
+            <div className="grid min-w-0 grid-cols-1 gap-[17px] min-[561px]:grid-cols-2 md:gap-6">
+              {LEARN.map((card, i) => (
+                <article
+                  key={card.title}
+                  className="learn-card group relative min-w-0 overflow-hidden rounded-[22px] border border-border bg-white p-[27px] transition-[transform,box-shadow,border-color] duration-250 hover:-translate-y-[5px] hover:border-[#cdaedb] hover:shadow-[0_15px_35px_#60296f0b] md:p-8"
+                >
+                  <span className="mb-[22px] inline-block rounded-[25px] bg-pale px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.08em] text-purple transition-colors group-hover:bg-[#ead9f2] group-hover:text-[#50215e]">
+                    {card.label}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute right-7 top-7 text-[28px] font-extrabold text-lilac transition-[color,transform] duration-300 group-hover:-translate-y-[3px] group-hover:text-[#ac79bf]"
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="display mb-[15px] max-w-[350px] text-2xl sm:text-[25px]">{card.title}</h3>
+                  <p className="max-w-[440px] text-[17px] text-muted">{card.body}</p>
+                </article>
+              ))}
+            </div>
 
+            <div className="relative mt-[30px] flex flex-col items-stretch gap-3.5 overflow-hidden rounded-[18px] bg-[linear-gradient(110deg,#31143e,#50215e)] px-[22px] py-[26px] text-white min-[601px]:grid min-[601px]:grid-cols-[1fr_180px] min-[601px]:gap-5 min-[601px]:p-[27px] min-[901px]:grid-cols-[1fr_.65fr_auto] min-[901px]:gap-[17px] min-[1101px]:grid-cols-[1.25fr_.8fr_auto] min-[1101px]:gap-[22px] min-[1101px]:px-8 min-[1101px]:py-7">
+              <div className="relative z-[1] self-center">
+                <h3 className="display text-[21px] min-[1101px]:text-[23px]">Your first step is a free seat.</h3>
+                <p className="mt-[5px] text-base text-[#e1d0e7]">
+                  Join Jacob live on October 30 at {WEBINAR.time}.
+                </p>
+              </div>
+              <div className="relative mx-auto h-[90px] w-full max-w-[340px] min-w-0 min-[601px]:mx-0 min-[601px]:h-[110px] min-[601px]:max-w-none min-[901px]:h-auto min-[901px]:min-h-[100px] min-[901px]:self-stretch" aria-hidden="true">
+                <svg viewBox="0 0 330 130" className="h-full w-full overflow-visible">
+                  <path d="M5 120C65 100 80 110 125 85S220 55 255 30S300 17 325 7" stroke="#ffffff18" strokeWidth="4" fill="none" />
+                  <path className="banner-line" pathLength={1} d="M5 120C65 100 80 110 125 85S220 55 255 30S300 17 325 7" stroke="#f6c866" strokeWidth="4" fill="none" />
+                  <circle cx="325" cy="7" r="5" fill="#ffdf9b" />
+                </svg>
+                <span className="absolute left-[15px] top-1 text-[11px] font-extrabold text-[#f4d393] sm:top-0 sm:text-xs">
+                  Learn. Plan. Build.
+                </span>
+              </div>
+              <SeatButton
+                variant="light"
+                className="w-full self-center min-[601px]:col-span-full min-[901px]:col-span-1 min-[901px]:w-auto min-[901px]:px-5 min-[901px]:text-base min-[1101px]:px-[27px] min-[1101px]:text-[19px]"
+              />
+            </div>
+          </div>
+        </section>
 
-function ArrowRight() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M5 12h14m0 0-5-5m5 5-5 5"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+        {/* ---------------- Interactive chart ---------------- */}
+        <section id="explore" className={SECTION}>
+          <div className={`${WRAP} grid grid-cols-1 items-center gap-10 min-[901px]:grid-cols-2 min-[901px]:gap-[38px] lg:gap-20`}>
+            <div className="min-w-0">
+              <Eyebrow>Understand the numbers</Eyebrow>
+              <h2 className="display text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">
+                See the story
+                <br />
+                <em>behind the sales.</em>
+              </h2>
+              <p className="mt-6 text-lg leading-[1.75] text-muted sm:text-[19px]">
+                Product research is only the beginning. Learn how to read the numbers and understand
+                what’s happening in a store.
+              </p>
+              <div className="mt-[30px] grid gap-[22px] sm:gap-6">
+                {STEPS.map((step, i) => (
+                  <div key={step.title} className="group flex gap-[18px]">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-pale text-[19px] font-extrabold text-purple transition-[transform,background-color] duration-250 group-hover:-translate-y-[3px] group-hover:bg-[#eadbf1]">
+                      {i + 1}
+                    </span>
+                    <div>
+                      <h3 className="display mb-2 mt-[3px] text-[21px]">{step.title}</h3>
+                      <p className="text-[17px] text-muted">{step.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <SalesChart />
+          </div>
+        </section>
 
-function CheckBadge() {
-  return (
-    <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-success/10 text-success">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path
-          d="M20 6 9 17l-5-5"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
-  );
-}
+        {/* ---------------- Host ---------------- */}
+        <section id="host" className={`${SECTION} bg-pale`}>
+          <div className={`${WRAP} grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-[45px] lg:gap-20`}>
+            <div className="relative mx-auto h-[420px] w-full overflow-hidden rounded-3xl bg-[#eee5f3] sm:h-[440px] md:mx-0 md:h-[500px] md:max-w-[460px]">
+              <Image
+                src="/jacob-host.png"
+                alt="Jacob Jones, webinar host"
+                fill
+                sizes="(min-width: 800px) 460px, 100vw"
+                className="origin-[44%_61%] scale-[1.28] object-cover object-[44%_58%]"
+              />
+              <div className="absolute inset-x-3.5 bottom-3.5 z-[1] rounded-[14px] bg-white p-[18px] leading-snug sm:inset-x-[22px] sm:bottom-[22px]">
+                <strong className="block text-[22px]">Jacob Jones</strong>
+                <span className="text-[15px] text-muted">7-figure seller · Founder of SourceDart</span>
+              </div>
+            </div>
+            <div className="max-w-[650px]">
+              <Eyebrow>Meet your host</Eyebrow>
+              <h2 className="display mb-6 text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">
+                Learn from someone
+                <br />
+                <em>who’s built the business.</em>
+              </h2>
+              <p className="text-muted">
+                Jacob Jones is a seven-figure e-commerce seller who has scaled multiple online
+                businesses beyond seven figures. He is also the founder and owner of SourceDart, a
+                sourcing tool built for Walmart sellers.
+              </p>
+              <p className="mt-[18px] text-muted">
+                In this live session, Jacob brings that hands-on experience to the foundations of
+                selling on Walmart — helping you understand the process and make more informed
+                decisions about your next steps.
+              </p>
+              <SeatButton className="mt-7" />
+            </div>
+          </div>
+        </section>
 
-function PlusIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M12 5v14M5 12h14"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+        {/* ---------------- Surprises ---------------- */}
+        <section className={`${SECTION} text-center`}>
+          <div className={WRAP}>
+            <div className="mx-auto mb-7 max-w-[700px] sm:mb-[35px]">
+              <Eyebrow>There’s more in store</Eyebrow>
+              <h2 className="display text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">
+                Unveiling <em>3 Surprises For You</em>
+              </h2>
+              <p className="mt-[18px] text-muted">
+                Three reveals, saved for the live webinar session. Join Jacob to find out what’s inside.
+              </p>
+            </div>
+            <div className="mx-auto grid max-w-[920px] grid-cols-3 gap-[9px] sm:gap-[22px]">
+              {["01", "02", "03"].map((n, i) => (
+                <div
+                  key={n}
+                  className="reveal relative rounded-[14px] border border-border bg-[linear-gradient(150deg,#fcfaff,#f1e7f7)] px-[5px] py-[17px] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-[5px] hover:border-[#d2b4de] hover:shadow-[0_16px_30px_#60296f10] sm:rounded-[22px] sm:px-[15px] sm:py-7"
+                >
+                  <div
+                    className="gift"
+                    aria-hidden="true"
+                    style={{ rotate: i === 1 ? "5deg" : "-7deg", animationDelay: `${i * -1.6}s` }}
+                  />
+                  <h3 className="display text-[15px] tracking-[-0.02em] sm:text-xl sm:tracking-[-0.04em]">
+                    Surprise {n}
+                  </h3>
+                  <p className="mt-[7px] text-xs text-muted sm:text-[15px]">Revealed live</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-function ClipboardIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M9 4h6v3H9zM7 5H5v15h14V5h-2M9 12h6M9 16h4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+        {/* ---------------- Join panel ---------------- */}
+        <section className={WRAP} aria-label="Reserve your webinar seat">
+          <div className="join-panel rounded-[22px] px-[19px] py-10 text-center text-white sm:rounded-[28px] sm:px-6 sm:py-[62px]">
+            <span className="eyebrow mb-[18px] bg-white/[0.09] text-[11px] text-[#eedcf4] sm:mb-5 sm:text-xs">
+              {WEBINAR.dateShort} · {WEBINAR.time}
+            </span>
+            <h2 className="display mx-auto max-w-[640px] text-[34px] sm:text-[clamp(33px,3.7vw,49px)]">
+              Take the next step.
+              <br />
+              Join Jacob live.
+            </h2>
+            <p className="mx-auto my-5 max-w-[590px] text-[17px] text-[#e4d3eb] sm:text-lg">
+              A free session to help you understand Walmart Marketplace and where to begin.
+            </p>
+            <CountdownTiles />
+            <SeatButton variant="light" className="w-full sm:w-auto sm:min-w-[280px]" />
+            <LocalTimeAndCalendar />
+          </div>
+        </section>
 
-function SearchIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="m16 16 4 4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+        {/* ---------------- FAQ ---------------- */}
+        <section id="faq" className={SECTION}>
+          <div className={`${WRAP} max-w-[850px]`}>
+            <div className="mb-8 text-center">
+              <Eyebrow>Good questions. Clear answers.</Eyebrow>
+              <h2 className="display text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">Before you join</h2>
+            </div>
+            {FAQS.map((item) => (
+              <details
+                key={item.q}
+                className="faq-card mt-3.5 rounded-[13px] border border-border transition-[border-color,box-shadow] duration-250 hover:border-[#d0b2dd] open:border-[#d0b2dd] open:shadow-[0_6px_18px_#60296f06]"
+              >
+                <summary className="flex cursor-pointer items-center justify-between gap-5 p-[19px] text-lg font-bold sm:p-[23px] sm:text-[19px]">
+                  {item.q}
+                </summary>
+                <p className="px-[19px] pb-5 text-[17px] text-muted sm:px-[23px] sm:pb-[23px]">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      </main>
 
-function BoxIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M4 8l8-4 8 4v8l-8 4-8-4V8Zm0 0 8 4m0 0 8-4m-8 4v8"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function TrophyIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M8 4h8v5a4 4 0 0 1-8 0V4Zm0 2H5v2a3 3 0 0 0 3 3m8-5h3v2a3 3 0 0 1-3 3m-4 4v3m-3 2h6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function TruckIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M3 7h10v9H3zM13 10h4l3 3v3h-7"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <circle cx="7" cy="18" r="1.8" stroke="currentColor" strokeWidth="2" />
-      <circle cx="17" cy="18" r="1.8" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function ChartIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M4 20V10m5 10V4m5 16v-7m5 7V8"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
+      <SiteFooter />
+    </RegistrationProvider>
   );
 }

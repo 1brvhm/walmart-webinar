@@ -21,13 +21,10 @@ export default function LegalShell({
     <div className="flex flex-1 flex-col">
       <header className="border-b border-border">
         <nav className="mx-auto flex w-full max-w-3xl items-center justify-between px-6 py-4">
-          <Link href="/" className="flex items-center gap-2.5 font-bold tracking-tight">
-            <Logo />
-            {BRAND.shortName}
-          </Link>
+          <Logo />
           <Link
             href="/"
-            className="text-sm font-semibold text-muted transition-colors hover:text-brand"
+            className="text-sm font-bold text-purple hover:underline"
           >
             &larr; Back to webinar
           </Link>
@@ -35,7 +32,7 @@ export default function LegalShell({
       </header>
 
       <main className="mx-auto w-full max-w-3xl px-6 py-14">
-        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+        <h1 className="display text-3xl sm:text-4xl">
           {title}
         </h1>
         <p className="mt-3 text-sm font-semibold text-faint">

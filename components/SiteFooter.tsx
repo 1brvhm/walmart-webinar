@@ -1,71 +1,63 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { BRAND, SUPPORTED_BY } from "@/lib/business";
+import { BRAND } from "@/lib/business";
 
 /**
- * Shared footer. The Privacy Policy and Terms of Service links must stay
- * publicly reachable from every page without logging in — carriers check both
- * URLs during A2P 10DLC campaign vetting.
+ * Shared footer. The Privacy Policy and Terms links must stay publicly
+ * reachable from every page without logging in — carriers check both URLs
+ * during A2P 10DLC campaign vetting.
  */
 export default function SiteFooter() {
+  const linkClass =
+    "min-h-10 text-base text-purple no-underline hover:underline sm:min-h-8 sm:text-[15px]";
+
   return (
-    <footer className="border-t border-border bg-surface">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-12">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-          <div className="flex flex-col gap-2">
-            <span className="flex items-center gap-2.5 font-bold tracking-tight">
-              <Logo />
-              {BRAND.shortName}
-            </span>
-            <p className="max-w-xs text-sm leading-6 text-faint">
-              Independent e-commerce training hosted by {BRAND.hostName}.
-            </p>
-            <p className="text-sm leading-6 text-faint">
-              Supported by{" "}
-              <a
-                href={SUPPORTED_BY.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-brand underline"
-              >
-                {SUPPORTED_BY.label}
-              </a>
+    <footer className="border-t border-border pb-[25px] pt-[45px]">
+      <div className="mx-auto w-[min(1180px,calc(100%-36px))] sm:w-[min(1180px,calc(100%-64px))]">
+        <div className="grid grid-cols-2 gap-[30px] sm:grid-cols-[1.5fr_1fr_1fr] sm:gap-[25px] lg:grid-cols-[2fr_1fr_1fr] lg:gap-[50px]">
+          <div className="col-span-2 sm:col-span-1">
+            <Logo href="/#main" />
+            <p className="mt-5 max-w-[420px] text-[15px] text-muted sm:text-sm">
+              Practical e-commerce education with {BRAND.hostName}.
+              <br />
+              Live webinar sponsored by SourceDart.
             </p>
           </div>
-
-          <nav className="flex flex-col gap-2.5 text-sm font-semibold">
-            <Link href="/privacy" className="text-muted transition-colors hover:text-brand">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="text-muted transition-colors hover:text-brand">
-              Terms of Service
-            </Link>
-            <a
-              href={`mailto:${BRAND.supportEmail}`}
-              className="text-muted transition-colors hover:text-brand"
-            >
-              Contact support
-            </a>
-          </nav>
+          <div>
+            <h3 className="display mb-[15px] text-[17px]">Explore</h3>
+            <div className="flex flex-col items-start gap-2">
+              <Link href="/#learn" className={linkClass}>The webinar</Link>
+              <Link href="/#host" className={linkClass}>Meet Jacob</Link>
+              <Link href="/#faq" className={linkClass}>Questions &amp; answers</Link>
+              {/* Plain <a> on purpose: a real hash navigation fires `hashchange`,
+                  which is what opens the registration modal. */}
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a href="/#register" className={linkClass}>Save my free seat</a>
+            </div>
+          </div>
+          <div>
+            <h3 className="display mb-[15px] text-[17px]">Support &amp; policies</h3>
+            <div className="flex min-w-0 flex-col items-start gap-2">
+              <Link href="/terms" className={linkClass}>Terms &amp; Conditions</Link>
+              <Link href="/privacy" className={linkClass}>Privacy Policy</Link>
+              <a href={`mailto:${BRAND.supportEmail}`} className={linkClass}>
+                Contact support
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-border pt-6 text-xs leading-6 text-faint">
+        <div className="mt-[35px] border-t border-border pt-[22px] text-[13px] text-muted [&>p]:my-2">
           <p>
-            &copy; {new Date().getFullYear()} {BRAND.legalName}. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} {BRAND.legalName}. All rights reserved.
           </p>
           <p>
-            Independent training. Not affiliated with, endorsed by, or sponsored
-            by Walmart Inc. Walmart and Walmart Marketplace are trademarks of
-            Walmart Apollo, LLC.
+            Independent training. Not affiliated with, endorsed by, or sponsored by Walmart Inc.
+            Walmart and Walmart Marketplace are trademarks of their respective owners.
           </p>
           <p>
-            Results are not typical or guaranteed. Nothing on this site is a
-            promise of earnings. See our{" "}
-            <Link href="/terms" className="font-semibold underline">
-              Terms of Service
-            </Link>{" "}
-            for the full earnings disclaimer.
+            Educational content only. No income, profit, or business results are guaranteed.
+            Selling online involves risk.
           </p>
         </div>
       </div>

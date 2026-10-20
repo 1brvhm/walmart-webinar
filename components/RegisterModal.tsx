@@ -166,11 +166,11 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
   }
 
   const fieldClass =
-    "min-h-14 w-full rounded-[7px] border border-border-strong bg-white px-3.5 py-3 text-lg text-ink placeholder:text-[#9a90a0] focus:border-purple focus:outline-none focus-visible:outline-none focus:ring-[3px] focus:ring-purple/15 disabled:opacity-60 aria-[invalid=true]:border-danger";
+    "min-h-14 w-full rounded-[7px] border border-border-strong bg-white px-3.5 py-3 text-lg text-ink placeholder:text-[#8a96a8] focus:border-blue focus:outline-none focus-visible:outline-none focus:ring-[3px] focus:ring-blue/15 disabled:opacity-60 aria-[invalid=true]:border-danger";
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#21142bbd] p-3"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#06173dc4] p-3"
       onMouseDown={(event) => {
         // Only a press on the backdrop itself should close.
         if (event.target === event.currentTarget) handleClose();
@@ -202,7 +202,7 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
 
         {isRegistered ? (
           <div className="flex flex-col items-center px-5 py-10 text-center sm:px-7">
-            <div className="flex size-16 items-center justify-center rounded-full bg-pale-2 text-purple">
+            <div className="flex size-16 items-center justify-center rounded-full bg-pale-2 text-blue">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
                   d="M20 6 9 17l-5-5"
@@ -235,7 +235,7 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
             <button
               type="button"
               onClick={handleClose}
-              className="mt-7 min-h-[56px] w-full rounded-[9px] border border-purple bg-white px-6 text-lg font-extrabold text-purple transition-colors hover:bg-pale"
+              className="mt-7 min-h-[56px] w-full rounded-[9px] border border-blue bg-white px-6 text-lg font-extrabold text-blue transition-colors hover:bg-pale"
             >
               Done
             </button>
@@ -335,15 +335,15 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
                   aria-invalid={Boolean(errors.terms)}
                   aria-describedby={errors.terms ? "terms-error" : undefined}
                   onChange={() => errors.terms && setErrors((e) => ({ ...e, terms: undefined }))}
-                  className="mt-[3px] size-[22px] shrink-0 cursor-pointer accent-purple"
+                  className="mt-[3px] size-[22px] shrink-0 cursor-pointer accent-blue"
                 />
                 <span className="min-w-0">
                   I am 18 or older, agree to the{" "}
-                  <Link href="/terms" target="_blank" className="text-purple underline">
+                  <Link href="/terms" target="_blank" className="text-blue underline">
                     Terms &amp; Conditions
                   </Link>{" "}
                   and{" "}
-                  <Link href="/privacy" target="_blank" className="text-purple underline">
+                  <Link href="/privacy" target="_blank" className="text-blue underline">
                     Privacy Policy
                   </Link>
                   , and agree to receive the webinar access details and reminders by email.
@@ -366,17 +366,17 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
                     disabled={isLoading}
                     aria-describedby="smsConsent-links"
                     onChange={(e) => setSmsConsent(e.target.checked)}
-                    className="mt-[3px] size-[22px] shrink-0 cursor-pointer accent-purple"
+                    className="mt-[3px] size-[22px] shrink-0 cursor-pointer accent-blue"
                   />
                   <span className="min-w-0">{SMS_CONSENT_TEXT}</span>
                 </label>
                 {/* Kept outside the <label> so tapping a link doesn't toggle the box. */}
                 <p id="smsConsent-links" className="mt-1.5 pl-[34px] text-[15px]">
-                  <Link href="/terms#sms" target="_blank" className="text-purple underline">
+                  <Link href="/terms#sms" target="_blank" className="text-blue underline">
                     SMS terms
                   </Link>{" "}
                   and{" "}
-                  <Link href="/privacy" target="_blank" className="text-purple underline">
+                  <Link href="/privacy" target="_blank" className="text-blue underline">
                     Privacy Policy
                   </Link>
                   .
@@ -395,7 +395,7 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="seat-cta inline-flex min-h-[60px] w-full items-center justify-center gap-3 rounded-[9px] border border-plum bg-plum px-[27px] py-[17px] text-[19px] font-extrabold leading-snug text-white transition-colors hover:bg-purple disabled:cursor-not-allowed disabled:opacity-70"
+                className="seat-cta inline-flex min-h-[60px] w-full items-center justify-center gap-3 rounded-[9px] border border-navy bg-navy px-[27px] py-[17px] text-[19px] font-extrabold leading-snug text-white transition-colors hover:bg-blue disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {isLoading ? (
                   <>

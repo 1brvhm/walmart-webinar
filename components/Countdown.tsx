@@ -41,13 +41,13 @@ function useCountdown(): Parts | null {
 
 const pad = (n: number | undefined) => String(n ?? 0).padStart(2, "0");
 
-/** Slim purple bar pinned above the header. */
+/** Slim blue bar pinned above the header. */
 export function CountdownBar() {
   const parts = useCountdown();
   const started = parts !== null && Object.values(parts).every((v) => v === 0);
 
   return (
-    <div className="bg-purple py-3 text-white">
+    <div className="bg-navy-deep py-3 text-white">
       <div className="mx-auto flex w-[min(1180px,calc(100%-36px))] items-center justify-center gap-3 sm:gap-[26px]">
         <p className="max-w-[100px] text-[13px] font-bold leading-snug sm:max-w-none sm:text-base">
           {started ? "The scheduled start time has arrived" : "Our live webinar starts in"}
@@ -61,10 +61,10 @@ export function CountdownBar() {
           {UNITS.map(([key, label]) => (
             <div
               key={key}
-              className="min-w-[38px] rounded-md bg-white px-[5px] py-1 text-center text-purple sm:min-w-[53px] sm:px-[9px]"
+              className="min-w-[38px] overflow-hidden rounded-md bg-white px-[5px] py-1 text-center text-blue shadow-[0_3px_10px_#00000030] sm:min-w-[53px] sm:px-[9px]"
             >
               <strong className="block text-lg leading-tight tabular-nums sm:text-xl">
-                {pad(parts?.[key])}
+                <span key={pad(parts?.[key])} className="tick">{pad(parts?.[key])}</span>
               </strong>
               <small className="block text-[9px] sm:text-[10px]">{label}</small>
             </div>
@@ -75,7 +75,7 @@ export function CountdownBar() {
   );
 }
 
-/** Large glassy tiles inside the dark "Join Jacob live" panel. */
+/** Large tiles inside the blue "Join Jacob live" panel. */
 export function CountdownTiles() {
   const parts = useCountdown();
 
@@ -89,10 +89,10 @@ export function CountdownTiles() {
       {UNITS.map(([key, label]) => (
         <div
           key={key}
-          className="min-w-[59px] rounded-xl border border-white/15 bg-white/[0.08] px-[7px] py-2.5 text-center sm:min-w-[73px] sm:p-3"
+          className="min-w-[59px] overflow-hidden rounded-xl border border-white/25 bg-white/[0.1] backdrop-blur-[2px] px-[7px] py-2.5 text-center sm:min-w-[73px] sm:p-3"
         >
           <strong className="block text-[29px] leading-tight tabular-nums sm:text-[34px]">
-            {pad(parts?.[key])}
+            <span key={pad(parts?.[key])} className="tick">{pad(parts?.[key])}</span>
           </strong>
           <small className="block text-xs sm:text-sm">{label}</small>
         </div>
@@ -159,7 +159,7 @@ export function LocalTimeAndCalendar() {
 
   return (
     <>
-      <p className="mt-5 min-h-6 text-[15px] text-[#e4d3eb]">{localTime}</p>
+      <p className="mt-5 min-h-6 text-[15px] text-[#dce8fb]">{localTime}</p>
       <button
         type="button"
         onClick={downloadIcs}

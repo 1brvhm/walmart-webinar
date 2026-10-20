@@ -3,10 +3,16 @@
 import { useRegistration } from "./RegistrationProvider";
 
 /** Walmart-style six-spoke spark that sits inside every seat CTA. */
-export function WalmartSpark({ className = "size-[23px]" }: { className?: string }) {
+export function WalmartSpark({
+  className = "size-[23px]",
+  tone = "fill-spark",
+}: {
+  className?: string;
+  tone?: string;
+}) {
   return (
     <svg
-      className={`walmart-spark block shrink-0 fill-spark ${className}`}
+      className={`walmart-spark block shrink-0 ${tone} ${className}`}
       viewBox="0 0 32 32"
       aria-hidden="true"
       focusable="false"
@@ -27,16 +33,17 @@ export function WalmartSpark({ className = "size-[23px]" }: { className?: string
 }
 
 const VARIANTS = {
-  /** Plum fill — default on white and lilac sections. */
+  /** Walmart blue fill — default on white and pale-blue sections. */
   solid:
-    "border border-purple bg-purple text-white hover:bg-purple-dark hover:shadow-[0_8px_24px_#60296f22]",
-  /** White fill — for the dark plum panels. */
-  light: "border border-white bg-white text-purple hover:bg-pale",
+    "border border-blue bg-blue text-white hover:bg-blue-dark hover:shadow-[0_10px_26px_#0453c42e]",
+  /** Yellow fill — for the navy and blue panels. */
+  sun: "border border-spark bg-spark text-navy hover:bg-spark-dark hover:shadow-[0_12px_30px_#ffc2203d]",
 } as const;
 
 const SIZES = {
   nav: "min-h-11 gap-2 rounded-[9px] px-3 py-2.5 text-xs sm:min-h-12 sm:px-5 sm:text-[15px]",
   md: "min-h-[60px] gap-3.5 rounded-[9px] px-[27px] py-[17px] text-lg sm:text-[19px]",
+  lg: "min-h-[68px] gap-4 rounded-[10px] px-8 py-[18px] text-xl sm:text-[22px]",
 } as const;
 
 /**
@@ -62,6 +69,7 @@ export default function SeatButton({
       className={`seat-cta inline-flex items-center justify-center font-extrabold leading-snug transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-0.5 ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
     >
       <WalmartSpark
+        tone={variant === "sun" ? "fill-navy" : "fill-spark"}
         className={size === "nav" ? "size-4 sm:size-[18px]" : "size-[21px] sm:size-[23px]"}
       />
       <span className="min-w-0">{label}</span>

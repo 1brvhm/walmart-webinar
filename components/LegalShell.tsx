@@ -24,7 +24,7 @@ export default function LegalShell({
           <Logo />
           <Link
             href="/"
-            className="text-sm font-bold text-purple hover:underline"
+            className="text-sm font-bold text-blue hover:underline"
           >
             &larr; Back to webinar
           </Link>

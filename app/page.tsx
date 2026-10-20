@@ -2,11 +2,12 @@ import Image from "next/image";
 import { CountdownBar, CountdownTiles, LocalTimeAndCalendar } from "@/components/Countdown";
 import HeroScene, { MotionToolbar } from "@/components/HeroScene";
 import Logo from "@/components/Logo";
+import { CountUp, ScrollReveal } from "@/components/Motion";
 import RegistrationProvider from "@/components/RegistrationProvider";
 import SalesChart from "@/components/SalesChart";
 import SeatButton from "@/components/SeatButton";
 import SiteFooter from "@/components/SiteFooter";
-import { WEBINAR } from "@/lib/business";
+import { SUPPORTED_BY, WEBINAR } from "@/lib/business";
 
 const WRAP = "mx-auto w-[min(1180px,calc(100%-36px))] sm:w-[min(1180px,calc(100%-40px))] md:w-[min(1180px,calc(100%-64px))]";
 const SECTION = "py-12 sm:py-[60px] md:py-[88px]";
@@ -72,13 +73,33 @@ const FAQS = [
   },
 ];
 
+/** Six translucent rays behind the "Join Jacob live" panel, Walmart-spark style. */
+const RAYS = [0, 60, 120, 180, 240, 300];
+
 function Eyebrow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <span className={`eyebrow mb-[18px] text-[11px] sm:mb-5 sm:text-xs ${className}`}>{children}</span>;
 }
 
+function SourceDartLink({ className = "hover:text-spark" }: { className?: string }) {
+  return (
+    <a
+      href={SUPPORTED_BY.url}
+      target="_blank"
+      rel="noopener"
+      className={`underline underline-offset-[3px] transition-colors ${className}`}
+    >
+      SourceDart
+    </a>
+  );
+}
+
+const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as React.CSSProperties;
+
 export default function Home() {
   return (
     <RegistrationProvider>
+      <ScrollReveal />
+
       <a
         href="#main"
         className="absolute left-4 top-[-100px] z-20 bg-white p-[15px] focus:top-3"
@@ -88,8 +109,8 @@ export default function Home() {
 
       <CountdownBar />
 
-      <header className="border-b border-border">
-        <nav className={`${WRAP} flex items-center justify-between gap-3 py-[18px] md:gap-6 md:py-6`} aria-label="Main navigation">
+      <header className="sticky top-0 z-30 border-b border-border bg-white/95 backdrop-blur">
+        <nav className={`${WRAP} flex items-center justify-between gap-3 py-3.5 md:gap-6 md:py-5`} aria-label="Main navigation">
           <Logo href="#main" />
           <div className="hidden gap-4 md:flex lg:gap-[25px]">
             {[
@@ -98,7 +119,11 @@ export default function Home() {
               ["#explore", "Explore"],
               ["#faq", "FAQs"],
             ].map(([href, label]) => (
-              <a key={href} href={href} className="py-2.5 text-sm font-bold text-purple no-underline lg:text-[15px]">
+              <a
+                key={href}
+                href={href}
+                className="relative py-2.5 text-sm font-bold text-blue no-underline after:absolute after:inset-x-0 after:bottom-1.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded after:bg-spark after:transition-transform after:duration-300 hover:after:scale-x-100 lg:text-[15px]"
+              >
                 {label}
               </a>
             ))}
@@ -109,43 +134,67 @@ export default function Home() {
 
       <main id="main">
         {/* ---------------- Hero ---------------- */}
-        <section className={`${WRAP} grid min-w-0 grid-cols-1 items-center gap-[25px] pb-[25px] pt-8 min-[900px]:grid-cols-[1fr_1.08fr] min-[900px]:gap-6 min-[900px]:pb-[38px] min-[900px]:pt-14 min-[1100px]:gap-[42px]`}>
-          <div className="min-w-0 max-w-[680px]">
-            <Eyebrow>Free live Walmart webinar</Eyebrow>
-            <h1 className="display mb-6 text-[clamp(36px,9.5vw,46px)] min-[600px]:text-[clamp(40px,4.2vw,58px)]">
-              Your next chapter
-              <br />
-              in e-commerce
-              <br />
-              <em>starts with Walmart.</em>
-            </h1>
-            <p className="text-lg leading-[1.75] text-muted sm:text-[19px]">
-              Learn the foundations of selling on Walmart Marketplace with Jacob Jones, a
-              seven-figure e-commerce seller and the founder of SourceDart.
-            </p>
-            <p className="mb-[18px] mt-[25px] text-base font-extrabold sm:text-[17px]">
-              {WEBINAR.dateLong} · {WEBINAR.time}
-            </p>
-            <SeatButton className="w-full min-[600px]:max-w-[440px]" />
-            <p className="mt-[13px] text-sm text-muted">Free to attend. No credit card needed.</p>
-          </div>
-          <div className="min-w-0">
-            <HeroScene />
+        <section className="hero-bg on-dark relative overflow-hidden text-white">
+          <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+          <div className={`${WRAP} relative grid min-w-0 grid-cols-1 items-center gap-10 pb-12 pt-10 min-[900px]:grid-cols-[1.05fr_1fr] min-[900px]:gap-8 min-[900px]:pb-16 min-[900px]:pt-[72px] min-[1100px]:gap-[48px]`}>
+            <div className="min-w-0 max-w-[620px]">
+              <div className="rise">
+                <Eyebrow className="eyebrow-dark">Free live Walmart webinar</Eyebrow>
+              </div>
+              <h1
+                className="display rise mb-6 text-[clamp(36px,10vw,48px)] min-[600px]:text-[clamp(42px,4.3vw,60px)]"
+                style={{ animationDelay: "100ms" }}
+              >
+                Your next chapter
+                <br />
+                in e-commerce
+                <br />
+                <em>starts with Walmart.</em>
+              </h1>
+              <p className="rise text-lg leading-[1.7] text-[#e6eefb] sm:text-[20px]" style={{ animationDelay: "200ms" }}>
+                Learn the freedom of working yourself easily making 5 to 10k a month allowing you to
+                be a business owner and work remotely and allow yourself to quit your nine to five or
+                help you make your extra additional income.
+              </p>
+              <p className="rise mt-4 text-[13px] leading-normal text-[#c4d4ef] sm:text-sm" style={{ animationDelay: "250ms" }}>
+                Income is not guaranteed. Results depend on your experience, effort, costs and market
+                conditions.
+              </p>
+              <p className="rise mt-7 text-base font-extrabold sm:text-lg" style={{ animationDelay: "300ms" }}>
+                {WEBINAR.dateLong} · {WEBINAR.time}
+              </p>
+              <p className="rise mt-4 text-sm text-[#dce8fb] sm:text-[15px]" style={{ animationDelay: "350ms" }}>
+                Free live training · Beginner friendly · Live Q&amp;A
+              </p>
+            </div>
+            <div className="min-w-0">
+              <HeroScene />
+            </div>
           </div>
         </section>
 
         <MotionToolbar />
 
-        <div className="border-y border-border py-[25px]">
+        <div className="border-y border-border py-[22px]">
           <div className={`${WRAP} flex flex-col items-center justify-between gap-5 md:flex-row md:gap-6`}>
-            <div className="flex items-center gap-4 text-[13px] text-muted sm:text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] text-muted sm:text-sm">
               <span>Sponsored by</span>
-              <Image src="/sourcedart.svg" alt="SourceDart" width={152} height={22} className="w-[152px] brightness-[0.2]" />
+              <a href={SUPPORTED_BY.url} target="_blank" rel="noopener" aria-label="SourceDart website">
+                <Image src="/sourcedart.svg" alt="SourceDart" width={152} height={22} className="w-[152px] brightness-[0.2] transition-opacity hover:opacity-75" />
+              </a>
+              <a
+                href={SUPPORTED_BY.url}
+                target="_blank"
+                rel="noopener"
+                className="text-[15px] font-bold text-blue underline underline-offset-[3px] sm:text-base"
+              >
+                www.{SUPPORTED_BY.label}
+              </a>
             </div>
             <div className="flex flex-wrap justify-center gap-2.5 text-[13px] font-bold sm:gap-[15px] sm:text-sm lg:gap-[30px] lg:text-base">
               {["Beginner friendly", "Practical training", "Live Q&A"].map((fact) => (
                 <span key={fact}>
-                  <span className="mr-[9px] text-purple" aria-hidden="true">✓</span>
+                  <span className="mr-[9px] text-blue" aria-hidden="true">✓</span>
                   {fact}
                 </span>
               ))}
@@ -153,10 +202,51 @@ export default function Home() {
           </div>
         </div>
 
+        {/* ---------------- Real dashboards ---------------- */}
+        <section id="dashboards" className={SECTION}>
+          <div className={WRAP}>
+            <div className="mb-9 max-w-[720px] sm:mb-12" data-reveal>
+              <Eyebrow>A look inside Jacob’s business</Eyebrow>
+              <h2 className="display text-[33px] sm:text-[clamp(34px,3.6vw,50px)]">
+                Real dashboards.
+                <br />
+                <em>A closer look at the numbers.</em>
+              </h2>
+              <p className="mt-[18px] text-muted sm:text-[19px]">
+                Explore Jacob’s Walmart Seller Center: actual sales, orders and account activity,
+                shown directly from his dashboard screenshots.
+              </p>
+            </div>
+
+            <div className="mx-auto grid max-w-[1060px] gap-6 sm:gap-8">
+              <DashboardCard
+                kicker="Last 90 days"
+                figure={<CountUp value={687716.68} decimals={2} prefix="$" duration={2200} />}
+                unit="GMV"
+                caption="Gross merchandise value · 7% decrease shown"
+                src="/dashboard-gmv.webp"
+                alt="Jacob's Walmart Seller Center showing $687,716.68 GMV over the last 90 days, down 7%, with a daily GMV chart from July to October"
+              />
+              <DashboardCard
+                kicker="Account snapshot"
+                figure={<CountUp value={880} duration={1600} />}
+                unit="Today’s orders"
+                caption="418 unshipped orders · 4.62 account rating"
+                src="/dashboard-orders.webp"
+                alt="Jacob's Walmart Seller Center showing 880 orders today, 418 unshipped orders, a 4.62 account rating and a $59,907.79 current balance"
+              />
+            </div>
+            <p className="mx-auto mt-6 max-w-[1060px] text-sm text-muted sm:text-[15px]" data-reveal>
+              Historical snapshots, not a live feed. GMV and account balance are not profit.
+              Individual results vary.
+            </p>
+          </div>
+        </section>
+
         {/* ---------------- What you'll learn ---------------- */}
         <section id="learn" className={`${SECTION} bg-pale`}>
           <div className={WRAP}>
-            <div className="mb-7 max-w-[700px] sm:mb-[38px]">
+            <div className="mb-7 max-w-[700px] sm:mb-[38px]" data-reveal>
               <Eyebrow>Inside the free webinar</Eyebrow>
               <h2 className="display text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">
                 A clearer path to
@@ -173,14 +263,16 @@ export default function Home() {
               {LEARN.map((card, i) => (
                 <article
                   key={card.title}
-                  className="learn-card group relative min-w-0 overflow-hidden rounded-[22px] border border-border bg-white p-[27px] transition-[transform,box-shadow,border-color] duration-250 hover:-translate-y-[5px] hover:border-[#cdaedb] hover:shadow-[0_15px_35px_#60296f0b] md:p-8"
+                  data-reveal
+                  style={delay((i % 2) * 120)}
+                  className="learn-card group relative min-w-0 overflow-hidden rounded-[22px] border border-border bg-white p-[27px] transition-[transform,box-shadow,border-color] duration-250 hover:-translate-y-[5px] hover:border-sky hover:shadow-[0_18px_40px_#0453c414] md:p-8"
                 >
-                  <span className="mb-[22px] inline-block rounded-[25px] bg-pale px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.08em] text-purple transition-colors group-hover:bg-[#ead9f2] group-hover:text-[#50215e]">
+                  <span className="mb-[22px] inline-block rounded-[25px] bg-pale px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.08em] text-blue transition-colors group-hover:bg-blue group-hover:text-white">
                     {card.label}
                   </span>
                   <span
                     aria-hidden="true"
-                    className="absolute right-7 top-7 text-[28px] font-extrabold text-lilac transition-[color,transform] duration-300 group-hover:-translate-y-[3px] group-hover:text-[#ac79bf]"
+                    className="absolute right-7 top-7 text-[28px] font-extrabold text-sky transition-[color,transform] duration-300 group-hover:-translate-y-[3px] group-hover:text-spark-dark"
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -190,25 +282,28 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="relative mt-[30px] flex flex-col items-stretch gap-3.5 overflow-hidden rounded-[18px] bg-[linear-gradient(110deg,#31143e,#50215e)] px-[22px] py-[26px] text-white min-[601px]:grid min-[601px]:grid-cols-[1fr_180px] min-[601px]:gap-5 min-[601px]:p-[27px] min-[901px]:grid-cols-[1fr_.65fr_auto] min-[901px]:gap-[17px] min-[1101px]:grid-cols-[1.25fr_.8fr_auto] min-[1101px]:gap-[22px] min-[1101px]:px-8 min-[1101px]:py-7">
+            <div
+              data-reveal="zoom"
+              className="relative mt-[30px] flex flex-col items-stretch gap-3.5 overflow-hidden rounded-[18px] bg-[linear-gradient(110deg,#071f4d,#0a2f74)] px-[22px] py-[26px] text-white shadow-[0_20px_50px_#0a2a632e] min-[601px]:grid min-[601px]:grid-cols-[1fr_180px] min-[601px]:gap-5 min-[601px]:p-[27px] min-[901px]:grid-cols-[1fr_.65fr_auto] min-[901px]:gap-[17px] min-[1101px]:grid-cols-[1.25fr_.8fr_auto] min-[1101px]:gap-[22px] min-[1101px]:px-8 min-[1101px]:py-7"
+            >
               <div className="relative z-[1] self-center">
                 <h3 className="display text-[21px] min-[1101px]:text-[23px]">Your first step is a free seat.</h3>
-                <p className="mt-[5px] text-base text-[#e1d0e7]">
+                <p className="mt-[5px] text-base text-[#d3e1f7]">
                   Join Jacob live on October 30 at {WEBINAR.time}.
                 </p>
               </div>
               <div className="relative mx-auto h-[90px] w-full max-w-[340px] min-w-0 min-[601px]:mx-0 min-[601px]:h-[110px] min-[601px]:max-w-none min-[901px]:h-auto min-[901px]:min-h-[100px] min-[901px]:self-stretch" aria-hidden="true">
                 <svg viewBox="0 0 330 130" className="h-full w-full overflow-visible">
                   <path d="M5 120C65 100 80 110 125 85S220 55 255 30S300 17 325 7" stroke="#ffffff18" strokeWidth="4" fill="none" />
-                  <path className="banner-line" pathLength={1} d="M5 120C65 100 80 110 125 85S220 55 255 30S300 17 325 7" stroke="#f6c866" strokeWidth="4" fill="none" />
-                  <circle cx="325" cy="7" r="5" fill="#ffdf9b" />
+                  <path className="banner-line" pathLength={1} d="M5 120C65 100 80 110 125 85S220 55 255 30S300 17 325 7" stroke="#ffc220" strokeWidth="4" fill="none" />
+                  <circle cx="325" cy="7" r="5" fill="#ffe48a" />
                 </svg>
-                <span className="absolute left-[15px] top-1 text-[11px] font-extrabold text-[#f4d393] sm:top-0 sm:text-xs">
+                <span className="absolute left-[15px] top-1 text-[11px] font-extrabold text-[#ffe08a] sm:top-0 sm:text-xs">
                   Learn. Plan. Build.
                 </span>
               </div>
               <SeatButton
-                variant="light"
+                variant="sun"
                 className="w-full self-center min-[601px]:col-span-full min-[901px]:col-span-1 min-[901px]:w-auto min-[901px]:px-5 min-[901px]:text-base min-[1101px]:px-[27px] min-[1101px]:text-[19px]"
               />
             </div>
@@ -218,7 +313,7 @@ export default function Home() {
         {/* ---------------- Interactive chart ---------------- */}
         <section id="explore" className={SECTION}>
           <div className={`${WRAP} grid grid-cols-1 items-center gap-10 min-[901px]:grid-cols-2 min-[901px]:gap-[38px] lg:gap-20`}>
-            <div className="min-w-0">
+            <div className="min-w-0" data-reveal="left">
               <Eyebrow>Understand the numbers</Eyebrow>
               <h2 className="display text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">
                 See the story
@@ -232,7 +327,7 @@ export default function Home() {
               <div className="mt-[30px] grid gap-[22px] sm:gap-6">
                 {STEPS.map((step, i) => (
                   <div key={step.title} className="group flex gap-[18px]">
-                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-pale text-[19px] font-extrabold text-purple transition-[transform,background-color] duration-250 group-hover:-translate-y-[3px] group-hover:bg-[#eadbf1]">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-pale text-[19px] font-extrabold text-blue transition-[transform,background-color,color] duration-250 group-hover:-translate-y-[3px] group-hover:bg-blue group-hover:text-white">
                       {i + 1}
                     </span>
                     <div>
@@ -243,54 +338,62 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <SalesChart />
+            <div className="min-w-0" data-reveal="right">
+              <SalesChart />
+            </div>
           </div>
         </section>
 
         {/* ---------------- Host ---------------- */}
-        <section id="host" className={`${SECTION} bg-pale`}>
-          <div className={`${WRAP} grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-[45px] lg:gap-20`}>
-            <div className="relative mx-auto h-[420px] w-full overflow-hidden rounded-3xl bg-[#eee5f3] sm:h-[440px] md:mx-0 md:h-[500px] md:max-w-[460px]">
+        <section id="host" className={`${SECTION} on-dark relative overflow-hidden bg-navy text-white`}>
+          <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+          <div className={`${WRAP} relative grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-[45px] lg:gap-20`}>
+            <div
+              data-reveal="left"
+              className="group relative mx-auto h-[420px] w-full overflow-hidden rounded-3xl bg-[#0b3a85] shadow-[0_30px_70px_#00000045] sm:h-[440px] md:mx-0 md:h-[500px] md:max-w-[460px]"
+            >
               <Image
                 src="/jacob-host.png"
                 alt="Jacob Jones, webinar host"
                 fill
                 sizes="(min-width: 800px) 460px, 100vw"
-                className="origin-[44%_61%] scale-[1.28] object-cover object-[44%_58%]"
+                className="origin-[44%_61%] scale-[1.28] object-cover object-[44%_58%] transition-transform duration-700 group-hover:scale-[1.33]"
               />
-              <div className="absolute inset-x-3.5 bottom-3.5 z-[1] rounded-[14px] bg-white p-[18px] leading-snug sm:inset-x-[22px] sm:bottom-[22px]">
+              <div className="absolute inset-x-3.5 bottom-3.5 z-[1] rounded-[14px] bg-white p-[18px] leading-snug text-ink shadow-[0_10px_30px_#00000030] sm:inset-x-[22px] sm:bottom-[22px]">
                 <strong className="block text-[22px]">Jacob Jones</strong>
-                <span className="text-[15px] text-muted">7-figure seller · Founder of SourceDart</span>
+                <span className="text-[15px] text-muted">
+                  7-figure seller · Founder of <SourceDartLink className="hover:text-blue" />
+                </span>
               </div>
             </div>
-            <div className="max-w-[650px]">
-              <Eyebrow>Meet your host</Eyebrow>
-              <h2 className="display mb-6 text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">
+            <div className="max-w-[650px]" data-reveal="right">
+              <Eyebrow className="eyebrow-dark">Meet your host</Eyebrow>
+              <h2 className="display mb-6 text-[33px] sm:text-[clamp(32px,3.4vw,48px)]">
                 Learn from someone
                 <br />
                 <em>who’s built the business.</em>
               </h2>
-              <p className="text-muted">
+              <p className="text-[#e3ecfa]">
                 Jacob Jones is a seven-figure e-commerce seller who has scaled multiple online
-                businesses beyond seven figures. He is also the founder and owner of SourceDart, a
-                sourcing tool built for Walmart sellers.
+                businesses beyond seven figures. He is also the founder and owner of{" "}
+                <SourceDartLink />, a sourcing tool built for Walmart sellers.
               </p>
-              <p className="mt-[18px] text-muted">
+              <p className="mt-[18px] text-[#e3ecfa]">
                 In this live session, Jacob brings that hands-on experience to the foundations of
                 selling on Walmart — helping you understand the process and make more informed
                 decisions about your next steps.
               </p>
-              <SeatButton className="mt-7" />
+              <SeatButton variant="sun" className="mt-8" />
             </div>
           </div>
         </section>
 
         {/* ---------------- Surprises ---------------- */}
-        <section className={`${SECTION} text-center`}>
+        <section className={`${SECTION} bg-cream text-center`}>
           <div className={WRAP}>
-            <div className="mx-auto mb-7 max-w-[700px] sm:mb-[35px]">
-              <Eyebrow>There’s more in store</Eyebrow>
-              <h2 className="display text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">
+            <div className="mx-auto mb-7 max-w-[720px] sm:mb-[38px]" data-reveal>
+              <Eyebrow className="eyebrow-sun">There’s more in store</Eyebrow>
+              <h2 className="display text-[33px] sm:text-[clamp(32px,3.2vw,46px)]">
                 Unveiling <em>3 Surprises For You</em>
               </h2>
               <p className="mt-[18px] text-muted">
@@ -301,7 +404,9 @@ export default function Home() {
               {["01", "02", "03"].map((n, i) => (
                 <div
                   key={n}
-                  className="reveal relative rounded-[14px] border border-border bg-[linear-gradient(150deg,#fcfaff,#f1e7f7)] px-[5px] py-[17px] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-[5px] hover:border-[#d2b4de] hover:shadow-[0_16px_30px_#60296f10] sm:rounded-[22px] sm:px-[15px] sm:py-7"
+                  data-reveal="zoom"
+                  style={delay(i * 140)}
+                  className="surprise relative rounded-[14px] border border-[#f0dea6] bg-[#fdf9ee] px-[5px] py-[17px] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-[6px] hover:border-spark hover:shadow-[0_18px_34px_#c9970f22] sm:rounded-[22px] sm:px-[15px] sm:py-7"
                 >
                   <div
                     className="gift"
@@ -319,21 +424,33 @@ export default function Home() {
         </section>
 
         {/* ---------------- Join panel ---------------- */}
-        <section className={WRAP} aria-label="Reserve your webinar seat">
-          <div className="join-panel rounded-[22px] px-[19px] py-10 text-center text-white sm:rounded-[28px] sm:px-6 sm:py-[62px]">
-            <span className="eyebrow mb-[18px] bg-white/[0.09] text-[11px] text-[#eedcf4] sm:mb-5 sm:text-xs">
+        <section className={`${WRAP} pt-12 sm:pt-[60px] md:pt-[88px]`} aria-label="Reserve your webinar seat">
+          <div
+            data-reveal="zoom"
+            className="join-panel on-dark relative isolate overflow-hidden rounded-[22px] px-[19px] py-10 text-center text-white shadow-[0_30px_70px_#0453c435] sm:rounded-[28px] sm:px-6 sm:py-[62px]"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 400 400"
+              className="panel-rays pointer-events-none absolute -right-[160px] top-1/2 -z-[1] w-[560px] -translate-y-1/2 opacity-90 max-sm:-right-[260px] max-sm:opacity-60"
+            >
+              {RAYS.map((deg) => (
+                <rect key={deg} x="176" y="20" width="48" height="140" rx="24" fill="#ffffff14" transform={`rotate(${deg} 200 200)`} />
+              ))}
+            </svg>
+            <span className="eyebrow mb-[18px] bg-white/[0.12] text-[11px] text-white sm:mb-5 sm:text-xs">
               {WEBINAR.dateShort} · {WEBINAR.time}
             </span>
-            <h2 className="display mx-auto max-w-[640px] text-[34px] sm:text-[clamp(33px,3.7vw,49px)]">
+            <h2 className="display mx-auto max-w-[640px] text-[34px] sm:text-[clamp(34px,3.9vw,52px)]">
               Take the next step.
               <br />
               Join Jacob live.
             </h2>
-            <p className="mx-auto my-5 max-w-[590px] text-[17px] text-[#e4d3eb] sm:text-lg">
+            <p className="mx-auto my-5 max-w-[590px] text-[17px] text-[#dce8fb] sm:text-lg">
               A free session to help you understand Walmart Marketplace and where to begin.
             </p>
             <CountdownTiles />
-            <SeatButton variant="light" className="w-full sm:w-auto sm:min-w-[280px]" />
+            <SeatButton variant="sun" className="w-full sm:w-auto sm:min-w-[280px]" />
             <LocalTimeAndCalendar />
           </div>
         </section>
@@ -341,14 +458,16 @@ export default function Home() {
         {/* ---------------- FAQ ---------------- */}
         <section id="faq" className={SECTION}>
           <div className={`${WRAP} max-w-[850px]`}>
-            <div className="mb-8 text-center">
+            <div className="mb-8 text-center" data-reveal>
               <Eyebrow>Good questions. Clear answers.</Eyebrow>
               <h2 className="display text-[33px] sm:text-[clamp(32px,3.2vw,44px)]">Before you join</h2>
             </div>
-            {FAQS.map((item) => (
+            {FAQS.map((item, i) => (
               <details
                 key={item.q}
-                className="faq-card mt-3.5 rounded-[13px] border border-border transition-[border-color,box-shadow] duration-250 hover:border-[#d0b2dd] open:border-[#d0b2dd] open:shadow-[0_6px_18px_#60296f06]"
+                data-reveal
+                style={delay(i * 70)}
+                className="faq-card mt-3.5 rounded-[13px] border border-border bg-white transition-[border-color,box-shadow] duration-250 hover:border-sky open:border-sky open:shadow-[0_8px_22px_#0453c40d]"
               >
                 <summary className="flex cursor-pointer items-center justify-between gap-5 p-[19px] text-lg font-bold sm:p-[23px] sm:text-[19px]">
                   {item.q}
@@ -362,5 +481,42 @@ export default function Home() {
 
       <SiteFooter />
     </RegistrationProvider>
+  );
+}
+
+function DashboardCard({
+  kicker,
+  figure,
+  unit,
+  caption,
+  src,
+  alt,
+}: {
+  kicker: string;
+  figure: React.ReactNode;
+  unit: string;
+  caption: string;
+  src: string;
+  alt: string;
+}) {
+  return (
+    <figure
+      data-reveal
+      className="shot-card overflow-hidden rounded-[20px] border border-border bg-white shadow-[0_24px_60px_#0a2a6312] transition-shadow duration-300 hover:shadow-[0_30px_70px_#0a2a631f] sm:rounded-[26px]"
+    >
+      <figcaption className="px-5 pb-5 pt-6 sm:px-[30px] sm:pb-7 sm:pt-8">
+        <span className="text-xs font-extrabold uppercase tracking-[0.12em] text-blue sm:text-[13px]">
+          {kicker}
+        </span>
+        <p className="mt-2 flex flex-wrap items-baseline gap-x-2 leading-tight">
+          <strong className="text-[34px] font-extrabold tracking-[-0.04em] sm:text-[42px]">{figure}</strong>
+          <span className="text-base font-semibold sm:text-lg">{unit}</span>
+        </p>
+        <span className="mt-2 block text-[15px] text-muted sm:text-base">{caption}</span>
+      </figcaption>
+      <div className="shot border-t border-border">
+        <Image src={src} alt={alt} width={1583} height={728} sizes="(min-width: 1100px) 1060px, 100vw" className="block h-auto w-full" />
+      </div>
+    </figure>
   );
 }

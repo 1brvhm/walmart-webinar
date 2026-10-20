@@ -2,28 +2,31 @@
 
 /* ------------------------------------------------------------------ *
  * E-commerce with Jacob Jones — design system
- * Light and calm: plum purple for structure, a warm Walmart-style spark
- * on every primary action, pale lilac for tinted sections.
+ * Walmart-inspired: deep navy for structure, Walmart blue for actions on
+ * light sections, a warm yellow spark on every dark-panel CTA.
  * ------------------------------------------------------------------ */
 :root {
   color-scheme: light;
 
   --background: #ffffff;
-  --pale: #f7f2fa;
-  --pale-2: #f0e5f5;
-  --border: #e7e0eb;
-  --border-strong: #a89aad;
+  --pale: #eef5ff;
+  --pale-2: #e2edfd;
+  --border: #e1e8f2;
+  --border-strong: #96a3b6;
 
-  --ink: #201728;
-  --muted: #645d6b;
+  --ink: #0f2140;
+  --muted: #4f5d73;
 
-  --purple: #60296f;
-  --purple-dark: #4a2056;
-  --plum: #2d1638;
-  --lilac: #e5d7eb;
+  --blue: #0453c4;
+  --blue-dark: #03439f;
+  --navy: #0a2a63;
+  --navy-deep: #071f4d;
+  --sky: #c9dbf7;
 
-  --spark: #ffc637;
-  --success: #237153;
+  --spark: #ffc220;
+  --spark-dark: #f5b400;
+  --cream: #fff3c9;
+  --success: #1d7a4f;
   --danger: #b4233c;
 }
 
@@ -35,17 +38,20 @@
   --color-border-strong: var(--border-strong);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
-  --color-purple: var(--purple);
-  --color-purple-dark: var(--purple-dark);
-  --color-plum: var(--plum);
-  --color-lilac: var(--lilac);
+  --color-blue: var(--blue);
+  --color-blue-dark: var(--blue-dark);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-sky: var(--sky);
   --color-spark: var(--spark);
+  --color-spark-dark: var(--spark-dark);
+  --color-cream: var(--cream);
   --color-success: var(--success);
   --color-danger: var(--danger);
 
   /* Legacy aliases still used by the legal pages. */
   --color-foreground: var(--ink);
-  --color-brand: var(--purple);
+  --color-brand: var(--blue);
   --color-surface: var(--pale);
   --color-faint: var(--muted);
 
@@ -54,7 +60,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 30px;
+  scroll-padding-top: 96px;
   overflow-x: clip;
 }
 
@@ -69,33 +75,48 @@ body {
 }
 
 :focus-visible {
-  outline: 3px solid #ad68ca;
+  outline: 3px solid #4d8fef;
   outline-offset: 5px;
 }
 
-/* Headings share one tight, heavy treatment; `em` inside them is the purple half. */
-.display {
-  font-weight: 800;
-  line-height: 1.17;
-  letter-spacing: -0.04em;
-}
-.display em {
-  font-style: normal;
-  color: var(--purple);
-}
+/* Layered so per-instance Tailwind utilities can override them. */
+@layer components {
+  /* Headings share one tight, heavy treatment; `em` is the accent half —
+     blue on light sections, yellow on dark ones. */
+  .display {
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.045em;
+  }
+  .display em {
+    font-style: normal;
+    color: var(--blue);
+  }
+  .on-dark .display em {
+    color: var(--spark);
+  }
 
-/* ----------------------------- primitives ----------------------------- */
+  /* ----------------------------- primitives ----------------------------- */
 
-.eyebrow {
-  display: inline-block;
-  border-radius: 30px;
-  background: var(--pale-2);
-  padding: 6px 13px;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--purple);
+  .eyebrow {
+    display: inline-block;
+    border-radius: 30px;
+    background: var(--pale-2);
+    padding: 6px 13px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+  .eyebrow-dark {
+    background: #ffffff17;
+    color: var(--spark);
+  }
+  .eyebrow-sun {
+    background: #ffdf7e;
+    color: var(--navy);
+  }
 }
 
 /* Primary CTA. A soft glint sweeps across on hover and the spark turns. */
@@ -109,7 +130,7 @@ body {
   position: absolute;
   inset: -60% auto -60% -70%;
   width: 35%;
-  background: linear-gradient(90deg, transparent, #ffffff25, transparent);
+  background: linear-gradient(90deg, transparent, #ffffff40, transparent);
   transform: skewX(-22deg);
   pointer-events: none;
   z-index: -1;
@@ -130,13 +151,18 @@ body {
   transform: translateX(3px);
 }
 
-/* Learn cards: an underline grows in on hover. */
+/* The big hero CTA breathes gently so the eye finds it. */
+.cta-pulse {
+  animation: cta-pulse 2.8s ease-in-out infinite;
+}
+
+/* Learn cards: a blue-to-yellow underline grows in on hover. */
 .learn-card::after {
   content: "";
   position: absolute;
   inset: auto 0 0 0;
   height: 3px;
-  background: linear-gradient(90deg, #60296f, #cba2df);
+  background: linear-gradient(90deg, var(--blue), var(--spark));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s ease;
@@ -146,22 +172,23 @@ body {
   transform: scaleX(1);
 }
 
-/* Surprise gifts — drawn in CSS so there is nothing to load. */
+/* Surprise gifts — drawn in CSS so there is nothing to load. The lid pops
+   on hover. */
 .gift {
   position: relative;
-  width: 70px;
-  height: 65px;
+  width: 72px;
+  height: 64px;
   margin: 20px auto 27px;
   border-radius: 10px;
-  background: linear-gradient(120deg, #8f4fa3, #60296f);
-  box-shadow: 8px 9px 0 #e2cfe9;
+  background: linear-gradient(120deg, #2a7cf0, var(--blue));
+  box-shadow: 8px 9px 0 #f0d27a;
   animation: gift-hover 5s ease-in-out infinite;
 }
 .gift::before {
   content: "";
   position: absolute;
   inset: 0 28px;
-  background: #dfbcea;
+  background: var(--spark);
 }
 .gift::after {
   content: "";
@@ -171,15 +198,20 @@ body {
   top: 0;
   height: 15px;
   border-radius: 5px;
-  background: #a975bd;
+  background: #3b8cf5;
+  transform-origin: 10% 100%;
+  transition: transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
-.reveal::after {
-  content: "✦";
+.surprise:hover .gift::after {
+  transform: rotate(-14deg) translateY(-6px);
+}
+.surprise::after {
+  content: "\2726";
   position: absolute;
   right: 17%;
   top: 20%;
   font-size: 15px;
-  color: #ad7bbe;
+  color: #7aa7e8;
   animation: twinkle 4s ease-in-out infinite;
 }
 @media (max-width: 560px) {
@@ -187,7 +219,7 @@ body {
     width: 45px;
     height: 44px;
     margin: 15px auto 23px;
-    box-shadow: 5px 6px 0 #e2cfe9;
+    box-shadow: 5px 6px 0 #f0d27a;
   }
   .gift::before {
     inset: 0 18px;
@@ -197,7 +229,7 @@ body {
     left: -3px;
     right: -3px;
   }
-  .reveal::after {
+  .surprise::after {
     right: 12%;
     font-size: 12px;
   }
@@ -214,31 +246,127 @@ body {
   content: "+";
   font-size: 25px;
   line-height: 1;
-  color: var(--purple);
+  color: var(--blue);
 }
 .faq-card[open] summary::after {
-  content: "−";
+  content: "\2212";
+}
+.faq-card[open] > p {
+  animation: faq-open 0.3s ease-out;
 }
 
-/* Hero dashboard sparkline + banner line. */
-.growth-tracer {
-  stroke-dasharray: 0.11 0.89;
-  animation: trace 5s linear infinite;
-  filter: drop-shadow(0 0 3px #bd85d3);
+/* ------------------------------ sections ------------------------------ */
+
+.hero-bg {
+  background:
+    radial-gradient(ellipse 60% 70% at 85% 30%, #1a5bc240, transparent 70%),
+    radial-gradient(ellipse 45% 60% at 0% 100%, #0453c433, transparent 70%),
+    linear-gradient(180deg, #0b3482, #0a2f74);
 }
-.banner-line {
-  stroke-dasharray: 1;
-  animation: line-grow 4.5s ease-in-out infinite;
-  filter: drop-shadow(0 0 5px #ffce6c60);
-}
-.float-sales {
-  animation: float-sales 5s ease-in-out infinite;
+.hero-grid {
+  background-image:
+    linear-gradient(#ffffff08 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff08 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 70% at 70% 40%, #000, transparent);
 }
 
 .join-panel {
   background:
-    radial-gradient(ellipse at 80% 0, #763a87, transparent 65%),
-    #281334;
+    radial-gradient(ellipse at 15% 0, #2a74e055, transparent 60%),
+    linear-gradient(140deg, #0a5ad0, #0349b3);
+}
+/* Oversized translucent Walmart-style rays drifting behind the panel. */
+.panel-rays {
+  animation: rays-drift 18s ease-in-out infinite;
+  transform-origin: 70% 50%;
+}
+
+/* Banner line in the "first step" strip. */
+.banner-line {
+  stroke-dasharray: 1;
+  animation: line-grow 4.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 5px #ffc22080);
+}
+.float-sales {
+  animation: float-sales 5s ease-in-out infinite;
+}
+.float-dash {
+  animation: float-dash 7s ease-in-out infinite;
+}
+
+/* Pulsing live dot. */
+.live-dot {
+  position: relative;
+}
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Dashboard screenshots: a slow light sweep and a lift on hover. */
+.shot {
+  position: relative;
+  overflow: hidden;
+}
+.shot::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -40%;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, #ffffff55, transparent);
+  transform: skewX(-18deg);
+  animation: shot-sweep 7s ease-in-out infinite;
+  pointer-events: none;
+}
+.shot img {
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.shot-card:hover .shot img {
+  transform: scale(1.025);
+}
+
+/* Countdown digits roll in when they change. */
+.tick {
+  display: inline-block;
+  animation: tick-in 0.35s ease-out;
+}
+
+/* ---------------------------- entrance motion ---------------------------- */
+
+.rise {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Scroll reveals. Only armed once JS adds `.reveal-ready` to <html>, so content
+   is never hidden for visitors without JavaScript. */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  translate: 0 28px;
+  transition:
+    opacity 0.7s ease,
+    translate 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    scale 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-ready [data-reveal="left"] {
+  translate: -36px 0;
+}
+.reveal-ready [data-reveal="right"] {
+  translate: 36px 0;
+}
+.reveal-ready [data-reveal="zoom"] {
+  translate: 0 0;
+  scale: 0.94;
+}
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
 }
 
 /* "Pause animations" toggles this on <body>. */
@@ -252,26 +380,53 @@ body.motion-paused *::after {
   from { left: -70%; }
   to { left: 140%; }
 }
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 #ffc22000, 0 14px 34px #0000002e; }
+  50% { box-shadow: 0 0 0 9px #ffc22030, 0 14px 34px #0000002e; }
+}
 @keyframes gift-hover {
   0%, 100% { translate: 0 0; }
-  50% { translate: 0 -5px; }
+  50% { translate: 0 -6px; }
 }
 @keyframes twinkle {
   0%, 100% { opacity: 0.35; scale: 0.85; }
   50% { opacity: 1; scale: 1.15; }
 }
-@keyframes trace {
-  from { stroke-dashoffset: 1; }
-  to { stroke-dashoffset: 0; }
-}
 @keyframes float-sales {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes float-dash {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
 }
 @keyframes line-grow {
   0% { stroke-dashoffset: 1; opacity: 0.25; }
   15% { opacity: 1; }
   80%, 100% { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes rays-drift {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(8deg) scale(1.04); }
+}
+@keyframes ping {
+  75%, 100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes shot-sweep {
+  0%, 70% { left: -40%; }
+  100% { left: 130%; }
+}
+@keyframes tick-in {
+  from { transform: translateY(-40%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes faq-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
@@ -307,13 +462,16 @@ body.motion-paused *::after {
     animation: none !important;
     transition: none !important;
   }
-  .growth-tracer {
-    display: none;
-  }
   .banner-line {
     stroke-dashoffset: 0;
   }
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
 }
+
 
 /* ------------------------------------------------------------------ *
  * Legal pages — long-form prose without the typography plugin.
@@ -368,7 +526,7 @@ body.motion-paused *::after {
 }
 .legal a {
   font-weight: 600;
-  color: var(--purple);
+  color: var(--blue);
   text-decoration: underline;
 }
 .legal address {
@@ -380,7 +538,7 @@ body.motion-paused *::after {
   margin: 1.5rem 0;
   border-radius: 0.75rem;
   border: 1px solid var(--border);
-  border-left: 4px solid var(--purple);
+  border-left: 4px solid var(--blue);
   background: var(--pale);
   padding: 1.25rem 1.5rem;
 }

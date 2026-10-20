@@ -39,7 +39,7 @@ function Segmented<T extends string | number>({
     <div
       role="group"
       aria-label={label}
-      className="flex gap-px rounded-[10px] border border-border bg-[#faf7fc] p-[3px] sm:gap-[3px] sm:p-1"
+      className="flex gap-px rounded-[10px] border border-border bg-[#f5f8fd] p-[3px] sm:gap-[3px] sm:p-1"
     >
       {options.map((o) => (
         <button
@@ -47,7 +47,7 @@ function Segmented<T extends string | number>({
           type="button"
           aria-pressed={o.value === value}
           onClick={() => onChange(o.value)}
-          className="min-h-11 rounded-md px-3 py-2 text-xs font-bold text-[#726779] aria-pressed:bg-white aria-pressed:text-purple aria-pressed:shadow-[0_2px_6px_#40214912] sm:min-h-10 sm:text-[13px]"
+          className="min-h-11 rounded-md px-3 py-2 text-xs font-bold text-[#56657b] aria-pressed:bg-white aria-pressed:text-blue aria-pressed:shadow-[0_2px_6px_#0a2a6314] sm:min-h-10 sm:text-[13px]"
         >
           {o.label}
         </button>
@@ -104,14 +104,14 @@ export default function SalesChart() {
   return (
     <div
       aria-label="Interactive sample store chart"
-      className="mx-auto w-full min-w-0 max-w-[620px] rounded-[18px] border border-border bg-white px-[17px] py-5 shadow-[0_20px_65px_#4021490c] sm:rounded-3xl sm:p-7 lg:max-w-none"
+      className="mx-auto w-full min-w-0 max-w-[620px] rounded-[18px] border border-border bg-white px-[17px] py-5 shadow-[0_20px_65px_#0a2a630d] sm:rounded-3xl sm:p-7 lg:max-w-none"
     >
       <div className="flex items-center justify-between gap-3">
         <div>
-          <span className="text-[10px] font-extrabold tracking-[0.13em] text-purple">SAMPLE STORE</span>
+          <span className="text-[10px] font-extrabold tracking-[0.13em] text-blue">SAMPLE STORE</span>
           <h3 className="display mt-[5px] text-[23px]">Sales overview</h3>
         </div>
-        <span className="whitespace-nowrap rounded-[20px] bg-pale px-2 py-[5px] text-[9px] font-bold text-purple sm:px-2.5 sm:py-1.5 sm:text-[10px]">
+        <span className="whitespace-nowrap rounded-[20px] bg-pale px-2 py-[5px] text-[9px] font-bold text-blue sm:px-2.5 sm:py-1.5 sm:text-[10px]">
           Illustrative data
         </span>
       </div>
@@ -164,16 +164,16 @@ export default function SalesChart() {
       >
         <defs>
           <linearGradient id="interactive-fill" x1="0" y1="0" x2="0" y2="1">
-            <stop stopColor="#995ab0" stopOpacity=".23" />
-            <stop offset="1" stopColor="#995ab0" stopOpacity=".01" />
+            <stop stopColor="#2f7fe0" stopOpacity=".23" />
+            <stop offset="1" stopColor="#2f7fe0" stopOpacity=".01" />
           </linearGradient>
         </defs>
         <path
           d={`M${X0} 22H${X1}M${X0} 72H${X1}M${X0} 122H${X1}M${X0} 172H${X1}`}
-          stroke="#ece5f0"
+          stroke="#e3eaf4"
           strokeDasharray="4 5"
         />
-        <g fill="#766d7c" fontSize="12">
+        <g fill="#5d6b80" fontSize="12">
           <text x="0" y="27">{metric === "revenue" ? `$${max}` : max}</text>
           <text x="20" y="177">0</text>
           <text x={X0} y="210">Day 1</text>
@@ -185,17 +185,17 @@ export default function SalesChart() {
         <path
           d={line}
           fill="none"
-          stroke="#783d91"
+          stroke="#0b5bd3"
           strokeWidth="3.5"
           strokeLinejoin="round"
           strokeLinecap="round"
         />
-        <path d={`M${dot.x} ${Y_TOP}V${Y_BASE}`} stroke="#a56bc2" strokeDasharray="4 5" />
-        <circle cx={dot.x} cy={dot.y} r="6" fill="#60296f" stroke="white" strokeWidth="3" />
+        <path d={`M${dot.x} ${Y_TOP}V${Y_BASE}`} stroke="#6ea3ea" strokeDasharray="4 5" />
+        <circle cx={dot.x} cy={dot.y} r="6" fill="#0453c4" stroke="white" strokeWidth="3" />
       </svg>
 
       <div className="mt-2 flex items-center justify-between gap-2.5 text-xs">
-        <label htmlFor="chart-day" className="font-extrabold text-purple">
+        <label htmlFor="chart-day" className="font-extrabold text-blue">
           Explore by day
         </label>
         <span className="text-[10px] text-muted">Drag or use arrow keys</span>
@@ -208,7 +208,7 @@ export default function SalesChart() {
         value={day}
         onChange={(e) => selectDay(Number(e.target.value))}
         aria-valuetext={`Day ${day}: ${format(selected[metric])} ${noun}`}
-        className="m-0 block h-11 w-full min-w-0 cursor-pointer p-0 accent-purple"
+        className="m-0 block h-11 w-full min-w-0 cursor-pointer p-0 accent-blue"
       />
 
       <div className="mb-[18px] mt-2.5">
@@ -220,7 +220,7 @@ export default function SalesChart() {
         </div>
         <div className="mt-2 h-[7px] overflow-hidden rounded-[10px] bg-pale">
           <span
-            className="block h-full rounded-[10px] bg-[linear-gradient(90deg,#ac71c0,#60296f)] transition-[width] duration-250"
+            className="block h-full rounded-[10px] bg-[linear-gradient(90deg,#5f9cf0,#0453c4)] transition-[width] duration-250"
             style={{ width: `${(day / period) * 100}%` }}
           />
         </div>
@@ -232,7 +232,7 @@ export default function SalesChart() {
       </p>
 
       <details className="mt-3">
-        <summary className="min-h-11 cursor-pointer py-2.5 text-[13px] text-purple">
+        <summary className="min-h-11 cursor-pointer py-2.5 text-[13px] text-blue">
           View the example data
         </summary>
         <div className="max-h-60 overflow-auto">

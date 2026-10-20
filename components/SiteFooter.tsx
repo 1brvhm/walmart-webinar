@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { BRAND } from "@/lib/business";
+import { BRAND, SUPPORTED_BY } from "@/lib/business";
 
 /**
  * Shared footer. The Privacy Policy and Terms links must stay publicly
@@ -9,7 +9,7 @@ import { BRAND } from "@/lib/business";
  */
 export default function SiteFooter() {
   const linkClass =
-    "min-h-10 text-base text-purple no-underline hover:underline sm:min-h-8 sm:text-[15px]";
+    "min-h-10 text-base text-blue no-underline hover:underline sm:min-h-8 sm:text-[15px]";
 
   return (
     <footer className="border-t border-border pb-[25px] pt-[45px]">
@@ -20,7 +20,16 @@ export default function SiteFooter() {
             <p className="mt-5 max-w-[420px] text-[15px] text-muted sm:text-sm">
               Practical e-commerce education with {BRAND.hostName}.
               <br />
-              Live webinar sponsored by SourceDart.
+              Live webinar sponsored by{" "}
+              <a
+                href={SUPPORTED_BY.url}
+                target="_blank"
+                rel="noopener"
+                className="text-ink underline underline-offset-2 hover:text-blue"
+              >
+                SourceDart
+              </a>
+              .
             </p>
           </div>
           <div>

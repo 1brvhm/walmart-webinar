@@ -8,7 +8,7 @@ export default function Logo({ href = "/" }: { href?: string }) {
       className="flex shrink-0 items-center gap-2 leading-tight text-ink no-underline sm:gap-[11px]"
     >
       <Image
-        src="/logo.png"
+        src="/logo-mark.png"
         alt=""
         width={47}
         height={47}

@@ -55,13 +55,13 @@ export default function HeroScene() {
             delay={700}
             label="GMV · Last 90 days"
             value={<CountUp value={687716.68} decimals={2} prefix="$" duration={2000} />}
-            note="From Jacob’s dashboard"
+            note="Straight from Jacob’s dashboard"
           />
           <FigureCard
             delay={850}
             label="Today’s orders"
             value={<CountUp value={880} duration={1600} />}
-            note="At time of screenshot"
+            note="Orders in a single day"
             float
           />
         </div>
@@ -74,7 +74,7 @@ export default function HeroScene() {
         <strong>Join Jacob live.</strong> Free to attend.
       </p>
       <p className="mt-3 max-w-[460px] text-center text-[11px] leading-normal text-[#c4d4ef] min-[600px]:text-xs">
-        Jacob’s supplied dashboard snapshots. Past sales do not guarantee future results.
+        Real numbers from a real store. Join Jacob and see how it’s done.
       </p>
     </div>
   );

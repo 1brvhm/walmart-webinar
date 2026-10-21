@@ -213,8 +213,8 @@ export default function Home() {
                 <em>A closer look at the numbers.</em>
               </h2>
               <p className="mt-[18px] text-muted sm:text-[19px]">
-                Explore Jacob’s Walmart Seller Center: actual sales, orders and account activity,
-                shown directly from his dashboard screenshots.
+                No mock-ups. No borrowed numbers. This is Jacob’s own Walmart Seller Center — the
+                real sales and real orders of a business he runs every single day.
               </p>
             </div>
 
@@ -223,23 +223,34 @@ export default function Home() {
                 kicker="Last 90 days"
                 figure={<CountUp value={687716.68} decimals={2} prefix="$" duration={2200} />}
                 unit="GMV"
-                caption="Gross merchandise value · 7% decrease shown"
+                caption="A real dashboard from someone who is actually in the business — not a guru with a slideshow."
                 src="/dashboard-gmv.webp"
-                alt="Jacob's Walmart Seller Center showing $687,716.68 GMV over the last 90 days, down 7%, with a daily GMV chart from July to October"
+                alt="Jacob's Walmart Seller Center showing $687,716.68 GMV over the last 90 days, with a daily GMV chart from July to October"
               />
               <DashboardCard
-                kicker="Account snapshot"
+                kicker="Today’s orders"
                 figure={<CountUp value={880} duration={1600} />}
-                unit="Today’s orders"
-                caption="418 unshipped orders · 4.62 account rating"
+                unit="orders in a single day"
+                caption="This is what a busy Walmart store looks like from the inside. On the webinar, Jacob shows you how it’s built."
                 src="/dashboard-orders.webp"
                 alt="Jacob's Walmart Seller Center showing 880 orders today, 418 unshipped orders, a 4.62 account rating and a $59,907.79 current balance"
               />
             </div>
-            <p className="mx-auto mt-6 max-w-[1060px] text-sm text-muted sm:text-[15px]" data-reveal>
-              Historical snapshots, not a live feed. GMV and account balance are not profit.
-              Individual results vary.
-            </p>
+
+            <div
+              data-reveal="zoom"
+              className="on-dark mx-auto mt-8 flex max-w-[1060px] flex-col items-center gap-5 rounded-[20px] bg-[linear-gradient(110deg,#071f4d,#0a2f74)] px-6 py-7 text-center text-white shadow-[0_20px_50px_#0a2a632e] sm:mt-10 sm:rounded-[24px] md:flex-row md:justify-between md:px-9 md:text-left"
+            >
+              <div>
+                <h3 className="display text-[22px] sm:text-[26px]">
+                  You’ve seen the numbers. <em>Now learn how they’re made.</em>
+                </h3>
+                <p className="mt-1.5 text-[15px] text-[#d3e1f7] sm:text-base">
+                  Jacob opens up his business live on {WEBINAR.dateShort} at {WEBINAR.time} — free to attend.
+                </p>
+              </div>
+              <SeatButton variant="sun" className="w-full shrink-0 md:w-auto" />
+            </div>
           </div>
         </section>
 

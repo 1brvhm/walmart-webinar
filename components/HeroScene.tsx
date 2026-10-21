@@ -33,18 +33,18 @@ export default function HeroScene() {
           </div>
         </div>
 
-        {/* Upper-body crop of Jacob, faded at the bottom edge */}
+        {/* Waist-up cutout of Jacob, faded at the bottom edge */}
         <div
-          className="rise absolute bottom-0 left-[2%] z-[2] aspect-[0.95] w-[58%] overflow-hidden [mask-image:linear-gradient(#000_88%,transparent_100%)] min-[600px]:left-[10%] min-[600px]:w-[54%]"
+          className="rise absolute bottom-0 left-0 z-[2] w-[60%] [mask-image:linear-gradient(#000_86%,transparent_100%)] min-[600px]:left-[6%] min-[600px]:w-[56%]"
           style={{ animationDelay: "450ms" }}
         >
           <Image
-            src="/jacob-cutout.png"
+            src="/jacob-hero.webp"
             alt="Jacob Jones, webinar host"
-            width={1086}
-            height={1448}
+            width={1028}
+            height={1272}
             priority
-            sizes="(min-width: 600px) 330px, 58vw"
+            sizes="(min-width: 600px) 340px, 60vw"
             className="block h-auto w-full drop-shadow-[0_14px_24px_#00000055]"
           />
         </div>

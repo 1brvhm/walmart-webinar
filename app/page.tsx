@@ -364,11 +364,11 @@ export default function Home() {
               className="group relative mx-auto h-[420px] w-full overflow-hidden rounded-3xl bg-[#0b3a85] shadow-[0_30px_70px_#00000045] sm:h-[440px] md:mx-0 md:h-[500px] md:max-w-[460px]"
             >
               <Image
-                src="/jacob-host.png"
-                alt="Jacob Jones, webinar host"
+                src="/jacob-about.webp"
+                alt="Jacob Jones, webinar host, standing on the lawn in front of a red-brick estate"
                 fill
                 sizes="(min-width: 800px) 460px, 100vw"
-                className="origin-[44%_61%] scale-[1.28] object-cover object-[44%_58%] transition-transform duration-700 group-hover:scale-[1.33]"
+                className="origin-[46%_62%] scale-[1.16] object-cover object-[50%_66%] transition-transform duration-700 group-hover:scale-[1.21]"
               />
               <div className="absolute inset-x-3.5 bottom-3.5 z-[1] rounded-[14px] bg-white p-[18px] leading-snug text-ink shadow-[0_10px_30px_#00000030] sm:inset-x-[22px] sm:bottom-[22px]">
                 <strong className="block text-[22px]">Jacob Jones</strong>

@@ -100,5 +100,6 @@ export const WEBINAR = {
   /** Display strings. Keep in sync with `startsAt`. */
   dateLong: "Friday, October 30, 2026",
   dateShort: "October 30, 2026",
+  dateCompact: "Fri, Oct 30",
   time: "8:30 PM EST",
 } as const;

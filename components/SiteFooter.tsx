@@ -64,9 +64,16 @@ export default function SiteFooter() {
             Independent training. Not affiliated with, endorsed by, or sponsored by Walmart Inc.
             Walmart and Walmart Marketplace are trademarks of their respective owners.
           </p>
-          <p>
-            Educational content only. No income, profit, or business results are guaranteed.
-            Selling online involves risk.
+          <p id="earnings-disclaimer" className="scroll-mt-28">
+            <strong className="font-bold text-ink">Earnings disclaimer:</strong> Income is not
+            guaranteed. Any income figures on this site, including monthly income
+            ranges and Jacob’s own dashboard results, are not typical and are not a promise of what
+            you will earn. Results depend on your experience, effort, costs and market conditions.
+            Educational content only; selling online involves risk.{" "}
+            <Link href="/terms#no-guarantee" className="underline hover:text-blue">
+              Read the full disclaimer
+            </Link>
+            .
           </p>
         </div>
       </div>

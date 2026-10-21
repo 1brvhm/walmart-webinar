@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { CountUp } from "./Motion";
-import SeatButton from "./SeatButton";
+import { SeatCallout } from "./SeatButton";
 
 /**
  * Hero visual: one of Jacob's own Seller Center snapshots, his cutout in front,
@@ -67,12 +67,9 @@ export default function HeroScene() {
         </div>
       </div>
 
-      <div className="rise relative z-[4] -mt-1 w-full max-w-[530px]" style={{ animationDelay: "1000ms" }}>
-        <SeatButton variant="sun" size="lg" className="cta-pulse w-full border-2 border-[#ffe48a]" />
+      <div className="rise relative z-[4] -mt-1 flex w-full justify-center" style={{ animationDelay: "1000ms" }}>
+        <SeatCallout />
       </div>
-      <p className="mt-4 text-[15px] text-white">
-        <strong>Join Jacob live.</strong> Free to attend.
-      </p>
       <p className="mt-3 max-w-[460px] text-center text-[11px] leading-normal text-[#c4d4ef] min-[600px]:text-xs">
         Real numbers from a real store. Join Jacob and see how it’s done.
       </p>

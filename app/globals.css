@@ -26,6 +26,7 @@
   --spark: #ffc220;
   --spark-dark: #f5b400;
   --cream: #fff3c9;
+  --mint: #98fbdc;
   --success: #1d7a4f;
   --danger: #b4233c;
 }
@@ -46,6 +47,7 @@
   --color-spark: var(--spark);
   --color-spark-dark: var(--spark-dark);
   --color-cream: var(--cream);
+  --color-mint: var(--mint);
   --color-success: var(--success);
   --color-danger: var(--danger);
 

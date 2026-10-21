@@ -5,7 +5,7 @@ import Logo from "@/components/Logo";
 import { CountUp, ScrollReveal } from "@/components/Motion";
 import RegistrationProvider from "@/components/RegistrationProvider";
 import SalesChart from "@/components/SalesChart";
-import SeatButton from "@/components/SeatButton";
+import SeatButton, { MobileSeatBar, SeatCallout } from "@/components/SeatButton";
 import SiteFooter from "@/components/SiteFooter";
 import { SUPPORTED_BY, WEBINAR } from "@/lib/business";
 
@@ -153,12 +153,16 @@ export default function Home() {
               </h1>
               <p className="rise text-lg leading-[1.7] text-[#e6eefb] sm:text-[20px]" style={{ animationDelay: "200ms" }}>
                 Learn the freedom of working yourself easily making 5 to 10k a month allowing you to
-                be a business owner and work remotely and allow yourself to quit your nine to five or
-                help you make your extra additional income.
-              </p>
-              <p className="rise mt-4 text-[13px] leading-normal text-[#c4d4ef] sm:text-sm" style={{ animationDelay: "250ms" }}>
-                Income is not guaranteed. Results depend on your experience, effort, costs and market
-                conditions.
+                be a business owner and work remotely and allow yourself to quit your{" "}
+                <span className="whitespace-nowrap">9-5</span> or help you make your extra additional
+                income.
+                <a
+                  href="#earnings-disclaimer"
+                  aria-label="Read the earnings disclaimer"
+                  className="ml-0.5 align-super text-sm text-[#c4d4ef] no-underline hover:text-spark"
+                >
+                  *
+                </a>
               </p>
               <p className="rise mt-7 text-base font-extrabold sm:text-lg" style={{ animationDelay: "300ms" }}>
                 {WEBINAR.dateLong} · {WEBINAR.time}
@@ -394,8 +398,90 @@ export default function Home() {
                 selling on Walmart — helping you understand the process and make more informed
                 decisions about your next steps.
               </p>
-              <SeatButton variant="sun" className="mt-8" />
+              <SeatButton
+                variant="sun"
+                size="lg"
+                detail={`Free · ${WEBINAR.dateCompact} · ${WEBINAR.time}`}
+                className="mt-8 w-full max-w-[460px]"
+              />
             </div>
+          </div>
+        </section>
+
+        {/* ---------------- SourceDart ---------------- */}
+        <section id="sourcedart" className="relative overflow-hidden bg-black py-12 text-white sm:py-14 md:py-16" aria-labelledby="sourcedart-title">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-40 top-1/2 size-[520px] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,#98fbdc26,transparent_65%)]"
+          />
+          <div className={`${WRAP} relative grid grid-cols-1 items-center gap-9 min-[900px]:grid-cols-[0.85fr_1.15fr] min-[900px]:gap-12`}>
+            <div data-reveal="left">
+              <Image src="/sourcedart-logo.png" alt="SourceDart" width={925} height={135} className="h-7 w-auto sm:h-8" />
+              <p className="mt-6 text-xs font-extrabold uppercase tracking-[0.14em] text-mint">Built by Jacob for Walmart sellers</p>
+              <h2 id="sourcedart-title" className="display mt-3 text-[30px] sm:text-[clamp(30px,3vw,40px)]">
+                See a product’s numbers <span className="text-mint">before you buy it.</span>
+              </h2>
+              <p className="mt-4 text-base text-white/75 sm:text-[17px]">
+                SourceDart sits right beside the Walmart listing you’re looking at and lays out what
+                matters for a sourcing decision — without leaving the page.
+              </p>
+              <ul className="mt-6 grid grid-cols-1 gap-x-5 gap-y-2.5 text-[15px] font-semibold min-[480px]:grid-cols-2">
+                {["Estimated sales per month", "Cost, profit & ROI", "Seller count, BSR & rating", "Add to catalogue & brand reporting"].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5">
+                    <span className="mt-[3px] grid size-[18px] shrink-0 place-items-center rounded-full bg-mint text-[11px] font-black text-black" aria-hidden="true">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={SUPPORTED_BY.url}
+                target="_blank"
+                rel="noopener"
+                className="mt-8 inline-flex min-h-12 items-center gap-2.5 rounded-[10px] border border-mint px-5 py-3 text-[15px] font-extrabold text-mint transition-colors hover:bg-mint hover:text-black"
+              >
+                Visit www.{SUPPORTED_BY.label}
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+
+            <figure data-reveal="right" className="relative min-w-0">
+              {/* Enlarged copy of the extension panel so its numbers are readable. */}
+              <Image
+                src="/sourcedart-panel.webp"
+                alt=""
+                width={448}
+                height={530}
+                sizes="260px"
+                className="float-dash absolute -right-2 top-[22%] z-[1] hidden w-[36%] max-w-[260px] rounded-xl border border-mint/50 shadow-[0_24px_60px_#000000b3,0_0_40px_#98fbdc26] min-[600px]:block"
+              />
+              <div className="overflow-hidden rounded-[14px] border border-white/10 bg-[#111] shadow-[0_0_0_1px_#98fbdc1f,0_30px_80px_#98fbdc1a] sm:rounded-[18px]">
+                <div className="flex items-center gap-1.5 border-b border-white/10 px-3.5 py-2.5" aria-hidden="true">
+                  <i className="size-2.5 rounded-full bg-white/20" />
+                  <i className="size-2.5 rounded-full bg-white/20" />
+                  <i className="size-2.5 rounded-full bg-white/20" />
+                  <span className="ml-3 truncate text-[11px] text-white/45">walmart.com · SourceDart extension</span>
+                </div>
+                <Image
+                  src="/sourcedart-in-action.webp"
+                  alt="SourceDart panel open beside Walmart search results, showing a Pokémon card lot with estimated sales of 16 per month, seller count, BSR, rating, cost, sales price, profit and ROI"
+                  width={1600}
+                  height={801}
+                  sizes="(min-width: 1180px) 640px, (min-width: 900px) 55vw, 100vw"
+                  className="hidden h-auto w-full min-[600px]:block"
+                />
+                <Image
+                  src="/sourcedart-panel.webp"
+                  alt="SourceDart panel showing a Pokémon card lot with estimated sales of 16 per month, seller count, BSR, rating, cost, sales price, profit and ROI"
+                  width={448}
+                  height={530}
+                  sizes="100vw"
+                  className="block h-auto w-full min-[600px]:hidden"
+                />
+              </div>
+              <figcaption className="mt-3 text-center text-[13px] text-white/50">
+                SourceDart running beside a live Walmart search.
+              </figcaption>
+            </figure>
           </div>
         </section>
 
@@ -461,7 +547,7 @@ export default function Home() {
               A free session to help you understand Walmart Marketplace and where to begin.
             </p>
             <CountdownTiles />
-            <SeatButton variant="sun" className="w-full sm:w-auto sm:min-w-[280px]" />
+            <SeatCallout className="mx-auto" />
             <LocalTimeAndCalendar />
           </div>
         </section>
@@ -491,6 +577,7 @@ export default function Home() {
       </main>
 
       <SiteFooter />
+      <MobileSeatBar />
     </RegistrationProvider>
   );
 }
